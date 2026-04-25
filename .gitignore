@@ -1,0 +1,43 @@
+# Build artifacts
+build/
+out/
+cmake_install.cmake
+CMakeCache.txt
+CMakeFiles/
+
+# IDE and editor
+.vscode/
+.idea/
+*.code-workspace
+*.swp
+*.swo
+*~
+.DS_Store
+
+# CMake
+CMakeUserPresets.json
+_deps/
+
+# Compiled files
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.dylib
+*.exe
+*.dll
+*.pdb
+
+# Install directory
+install/
+
+# Temporary files
+*.tmp
+*.log
+*.bak
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
