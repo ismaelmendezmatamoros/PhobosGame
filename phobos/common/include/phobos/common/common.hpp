@@ -4,5 +4,6 @@
 #include "logger.hpp"
 #include "log_message.hpp"
 #include "object.hpp"
+#include "object_factory.hpp"
 #include "utils.hpp"
 

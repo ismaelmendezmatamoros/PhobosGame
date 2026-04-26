@@ -16,12 +16,12 @@ class Logger {
     public:
 
     static void logMessage(const LogMessage &message);
-    static void logMessage(std::string_view message, const LogMessage::SeverityLevel severity = LogMessage::SeverityLevel::INFO);
+    static void logMessage(const std::string_view message, const LogMessage::SeverityLevel severity = LogMessage::SeverityLevel::INFO);
 
     private:
     static std::string getCurrentTimeToStr();
-    static void handleMessage(std::string_view message, const LogMessage::SeverityLevel severity);
-    
+    static void handleMessage(const std::string_view message, const LogMessage::SeverityLevel severity);
+
     static inline std::mutex logMutex;
 };
 };

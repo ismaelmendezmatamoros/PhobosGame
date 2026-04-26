@@ -1,9 +1,13 @@
 #pragma once
 
 #include <string>
+#include <cstdint>
+
+#include "phobos/common/cpp_defs.hpp"
 
 namespace Phobos::Common::Definitions {
-    using IdType = unsigned int;
+    
+    using IdType = std::uint64_t;
     static inline constexpr IdType invalidId{0};
 
     struct LogMessage {
