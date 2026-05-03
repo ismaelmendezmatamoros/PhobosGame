@@ -1,6 +1,6 @@
 #include "phobos/common/phobos_class.hpp"
 
-using namespace Phobos::Common;
+using namespace Phobos;
 
 PhobosClass::PhobosClass() : id{idCounter++} {}
 

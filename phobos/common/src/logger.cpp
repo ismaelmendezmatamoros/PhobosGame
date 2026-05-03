@@ -8,7 +8,7 @@
 #include <mutex>
 
 
-using namespace Phobos::Common;
+using namespace Phobos;
 
 void Phobos::Logger::logMessage(const LogMessage &message) {
 

@@ -7,8 +7,7 @@
 
 
 
-namespace Phobos::Common {
-using namespace Phobos::Common::Definitions;
+namespace Phobos {
 
 class PhobosClass {
     

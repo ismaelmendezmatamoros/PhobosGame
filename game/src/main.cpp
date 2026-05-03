@@ -31,6 +31,11 @@ int main() {
             parent.logMessage(std::format("{}", p->getId()));
         }
 
+        auto p = [](int p){std::cout<<"werwer" << p <<std::endl;};
+        
+        Phobos::FSMState<decltype(p), int>mm{p};
+mm(78);
+
     }
 
     catch (const std::exception& e) {
