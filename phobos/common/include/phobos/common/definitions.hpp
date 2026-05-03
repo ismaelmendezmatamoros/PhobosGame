@@ -2,6 +2,7 @@
 
 #include <string>
 #include <cstdint>
+#include <concepts>
 
 #include "phobos/common/cpp_defs.hpp"
 
@@ -10,7 +11,11 @@ namespace Phobos {
     using IdType = std::uint64_t;
     static inline constexpr IdType invalidId{0};
 
-
+    template<typename T>
+    concept ValidKey = requires(const 
+        T &a, const T &b) {
+        {std::less<T>{}(a, b)} -> std::convertible_to<bool>;
+    };
 
     struct LogMessage {
 

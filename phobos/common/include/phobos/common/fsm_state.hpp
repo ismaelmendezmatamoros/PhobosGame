@@ -3,20 +3,21 @@
 #include <concepts>
 
 namespace Phobos {
-
+    
     template<typename T, typename ...Args>
-    requires std::invocable<T, Args...>
-        && std::copy_constructible<T>
+    concept StateCallType = std::invocable<T, Args...> && std::copy_constructible<T>;
+    
+    template<typename KeyType, typename StateCallType, typename ...Args>
     class FSMState {
         public:
-        FSMState(const T function): action{function} {}
-        std::invoke_result<T, Args...>::type operator()(Args&&... args) {return action(std::forward<Args>(args)...);}
-        virtual void onEntering() {}
-        virtual void onExiting() {}
+        FSMState(const StateCallType function): action{function} {}
+        std::invoke_result<StateCallType, Args...>::type operator()(Args&&... args) {return action(std::forward<Args>(args)...);}
+        virtual void onEntering(KeyType input) {}
+        virtual void onExiting(KeyType output) {}
         virtual ~FSMState() = default;
 
         private:
-        T action;
+        StateCallType action;
     };
 
 };

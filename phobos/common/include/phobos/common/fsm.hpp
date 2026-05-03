@@ -7,9 +7,9 @@
 
 namespace Phobos {
     
-    template <typename T>
+    template <Phobos::ValidKey KeyType,  Phobos::StateCallType Call>
     class FSM {
-
+        
         //addState(IdType key, )
         virtual void stateChanged(IdType previousState, IdType newState);
         virtual ~FSM() = default;

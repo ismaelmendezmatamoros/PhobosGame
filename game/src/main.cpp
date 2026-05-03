@@ -33,9 +33,8 @@ int main() {
 
         auto p = [](int p){std::cout<<"werwer" << p <<std::endl;};
         
-        Phobos::FSMState<decltype(p), int>mm{p};
-mm(78);
-
+        Phobos::FSMState<Phobos::IdType, decltype(p), int>mm{p};
+        mm(78);
     }
 
     catch (const std::exception& e) {
