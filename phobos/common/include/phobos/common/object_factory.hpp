@@ -10,10 +10,6 @@
 
 namespace Phobos {
 
-    template <typename Derived>
-    concept DerivedFromObject =
-    std::derived_from<Derived, Object>;
-
     template<DerivedFromObject T>
     class ObjectFactory {
         

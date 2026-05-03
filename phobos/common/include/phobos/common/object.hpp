@@ -7,44 +7,65 @@
 #include <memory>
 #include <map>
 #include <ranges>
+#include <concepts>
+#include <list>
 
 namespace Phobos {
     using namespace Phobos::Common;
 
+    class Object;
+
+    template <typename Derived>
+    concept DerivedFromObject =
+    std::derived_from<Derived, Object>;
+
     class Object : virtual public PhobosClass {
 
+
+
         public:
-        
+
         static const std::map<IdType, Object*> &getObjectsRegistry();
 
-        Object(std::shared_ptr<Object> parent = std::shared_ptr<Object>{});
+        Object(Object *parent = nullptr);
+
+        template <DerivedFromObject T, typename ...Args>
+        T* createChild(Args&& ...args);
+
+        bool deleteChild(IdType childId);
+        std::size_t getChildrenCount() const;
+        Object* getChild(IdType childId) const;
+        void addChild(Object *child);
+
+        std::list<Object*> getChildren() const;
+        std::list<IdType> getChildrenIds() const;
+
+        virtual ~Object() = default;
+        
+        private:
+
         Object(const Object &other);
         Object(Object &&other);
         Object& operator=(const Object &other);
         Object& operator=(Object &&other);
 
-        bool deleteChild(IdType childId);
-        void addChild(std::shared_ptr<Object> child);
-        std::size_t getChildrenCount() const;
-        std::shared_ptr<Object> getChild(IdType childId) const;
-        auto getChildren();
-        auto getChildrenIds();  
-        
-        /*vas por qui. lka has cagado con el diseño y a hora de crear un object el padre los almacena como shared pointer
-        pero no tienes shared pointer (en los constructores y asignaciones de copia y movimiento). solo puinterop normal asiq hay q cambiarlo. hay que hacer:
-        - que el hijo lo cree el padre. de esta forma el padre crea el shared pointer.*/
-
-        virtual ~Object() = default;
-        
-        private:
         static inline std::shared_mutex objectsRegistryMutex;
         static inline std::map<IdType, Object*> objectsRegistry;
         static void addToRegistry(Object *object);
-        static void removeFromRegistry(Object *object);
+        static void removeFromRegistry(IdType ObjectId);
 
         mutable std::shared_mutex childrenMutex;
-        std::map<IdType, std::shared_ptr<Object>> children;
+        std::map<IdType, std::unique_ptr<Object>> children;
 
-        std::weak_ptr<Object> parent;
+        //std::weak_ptr<Object> parent;
+        Object *parent;
     };
+
+    template <DerivedFromObject T, typename ...Args> //!!!!!!!!!!!!!!!!!!!!!!!!vas por aqui estas usando unique_ptrs y q el padre cree los hijos
+    T* Object::createChild(Args&& ...args) {
+        auto child = std::make_unique<T>(std::forward<Args>(args)...);//new T{std::forward<Args>(args)...};
+        child->parent = this;
+        auto it = children.insert_or_assign(child->getId(), std::move(child));
+        return it.second ? dynamic_cast<T*>((*it.first).second.get()) : nullptr;
+    }
 };

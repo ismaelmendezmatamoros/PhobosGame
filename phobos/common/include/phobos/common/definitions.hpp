@@ -10,6 +10,8 @@ namespace Phobos::Common::Definitions {
     using IdType = std::uint64_t;
     static inline constexpr IdType invalidId{0};
 
+
+
     struct LogMessage {
 
         enum class SeverityLevel {

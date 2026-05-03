@@ -7,18 +7,22 @@ const std::map<IdType, Object*> &Object::getObjectsRegistry() {
     return objectsRegistry;
 }
 
-Object::Object(std::shared_ptr<Object> parent) : parent{parent} {
+Object::Object(Object *parentObject)
+        :parent{parentObject} {
     addToRegistry(this);
 }
 
-Object::Object(const Object &other) : PhobosClass{other}, parent{other.parent}  {
+Object::Object(const Object &other)
+        :PhobosClass{other}
+        ,parent{other.parent}  {
     addToRegistry(this);
-
 }
 
-Object::Object(Object &&other) : PhobosClass{std::move(other)}, parent{std::move(other.parent)} {
+Object::Object(Object &&other)
+        :PhobosClass{std::move(other)}
+        ,parent{std::move(other.parent)} {
     addToRegistry(this);
-    other.parent.reset();
+    other.parent = nullptr;
 }
 
 Object& Object::operator=(const Object &other) {
@@ -32,7 +36,7 @@ Object& Object::operator=(Object &&other) {
     parent = other.parent = std::move(other.parent);
     PhobosClass::operator=(std::move(other));
     addToRegistry(this);
-    other.parent.reset();
+    other.parent = nullptr;
     return *this;
 }
 
@@ -46,12 +50,21 @@ bool Object::deleteChild(IdType childId) {
     return children.erase(childId) > 0;
 }
 
-void Object::addChild(std::shared_ptr<Object> child) {
-    if (child == nullptr) {
+void Object::addChild(Object *child) {
+    if (child == nullptr)
+        return;
+    auto key = child->getId();
+    auto childParent = child->parent;
+    std::unique_lock<std::shared_mutex> childrenUl(childrenMutex);
+    if (childParent == nullptr) {
+        children.insert_or_assign(key , std::unique_ptr<Phobos::Object>(child));
+        childParent = this;
         return;
     }
-    std::unique_lock<std::shared_mutex> ul;
-    children.insert_or_assign(child->getId(), child);
+    std::unique_lock<std::shared_mutex> parentChildrenUl(childParent->childrenMutex);
+    auto node = childParent->children.extract(key);
+    children.insert(std::move(node));
+    child->parent = this;
 }
 
 std::size_t Object::getChildrenCount() const {
@@ -59,23 +72,25 @@ std::size_t Object::getChildrenCount() const {
     return children.size();
 }
 
-std::shared_ptr<Object> Object::getChild(IdType childId) const {
+Object* Object::getChild(IdType childId) const {
     std::shared_lock<std::shared_mutex> sl;
-    return children.at(childId);
+    return children.at(childId).get();
 }
 
-auto Object::getChildren() {
+std::list<Object*> Object::getChildren() const {
     std::shared_lock<std::shared_mutex> sl;
-    return children | std::views::values;
+    auto getPointer = [](const std::unique_ptr<Object> &ptr) {return ptr.get();};
+    auto values_view = children | std::views::values | std::views::transform(getPointer);
+    return std::ranges::to<std::list<Object*>>(values_view);
 }
 
-auto Object::getChildrenIds() {
+std::list<IdType> Object::getChildrenIds() const {
     std::shared_lock<std::shared_mutex> sl;
-    return children | std::views::keys;
+    auto keys_range = children | std::views::keys;
+    return std::ranges::to<std::list<IdType>>(keys_range);
 }
 
-
-void Object::removeFromRegistry(Object *object) {
+void Object::removeFromRegistry(IdType ObjectId) {
     std::unique_lock<std::shared_mutex> ul;
-    objectsRegistry.erase(object->getId());
+    objectsRegistry.erase(ObjectId);
 }
