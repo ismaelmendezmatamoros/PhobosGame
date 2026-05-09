@@ -2,16 +2,17 @@
 
 #include "common.hpp"
 #include "windows_definitions.hpp"
+#include "engine_component.hpp"
 
 #include <string>
 #include <string_view>
 
 namespace Phobos::Window {
 
-    class WindowBaseInterface : public PhobosClass {
+    class WindowBaseInterface : public Phobos::Engine::EngineComponent {
         public:
-        WindowBaseInterface(Window::WindowConfiguration config)
-            : title{config.title}, opened{true} {
+        WindowBaseInterface(std::string name,  Window::WindowConfiguration config)
+            : Phobos::Engine::EngineComponent{name}, title{config.title}, opened{true} {
             }
         virtual ~WindowBaseInterface() = default;
         
@@ -25,9 +26,9 @@ namespace Phobos::Window {
         virtual Resolution getResolution() const = 0;
         virtual void setResolution(const Resolution &newResolution) = 0;
 
-        virtual void refresh() = 0;
+        void execute() override = 0;
 
-        std::string formatHeader() const override= 0;
+        virtual void refresh() = 0;
 
         std::string getTitle() const { return title; }
         void setTitle(std::string_view newTitle) { title = std::string(newTitle); }

@@ -7,7 +7,7 @@ Engine::Engine(const Configuration config)
         : configuration{config}
         , stopLoop{false}
 {
-    logMessage("Engine created", Phobos::LogMessage::SeverityLevel::INFO);
+    logMessage("Created", Phobos::LogMessage::SeverityLevel::INFO);
 }
 
 Engine::~Engine() {

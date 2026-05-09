@@ -3,13 +3,13 @@
 
 using namespace Phobos::Window::OpenGL;
 
-WindowOpenGL::WindowOpenGL(Window::WindowConfiguration config) : WindowBaseInterface{config}
+WindowOpenGL::WindowOpenGL(Window::WindowConfiguration config)
+        : WindowBaseInterface{componentNameConst, config}
 {
-    logMessage(std::format("Window \"{}\" created", title), LogMessage::SeverityLevel::INFO);
+
 }
 
 WindowOpenGL::~WindowOpenGL() {
-    logMessage("Finalizing", Phobos::LogMessage::SeverityLevel::INFO);
 }
 
 void WindowOpenGL::show()
@@ -39,8 +39,8 @@ Phobos::Window::Resolution WindowOpenGL::getResolution() const
     return Phobos::Window::Resolution{};
 }
 
-std::string WindowOpenGL::formatHeader() const {
-    return logHeader;
+void WindowOpenGL::execute() {
+    logMessage("executing");
 }
 
 void WindowOpenGL::setResolution(const Resolution &newResolution)

@@ -24,12 +24,12 @@ namespace OpenGL {
         Resolution getResolution() const override;
         void setResolution(const Resolution &newResolution) override;
 
+        void execute() override;
+
         void refresh() override;
 
-        std::string formatHeader() const override;
-
         private:
-         static constexpr std::string logHeader{"Window"};
+         static constexpr std::string componentNameConst{"Window"};
     };
 
 } // namespace Opengl
