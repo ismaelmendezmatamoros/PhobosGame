@@ -1,8 +1,4 @@
-#include "phobos/common/common.hpp"
-#include "phobos/window/window.hpp"
-#include "phobos/sound/sound.hpp"
-#include "phobos/io/io.hpp"
-#include "phobos/graphics/graphics.hpp"
+#include "engine.hpp"
 
 #include <iostream>
 #include <functional>

@@ -1,4 +1,4 @@
-#include "phobos/window/window.hpp"
+#include "window.hpp"
 
 namespace Phobos {
 namespace Window {

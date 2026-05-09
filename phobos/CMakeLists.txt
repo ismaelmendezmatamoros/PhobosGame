@@ -9,6 +9,7 @@ add_subdirectory(window)
 add_subdirectory(sound)
 add_subdirectory(io)
 add_subdirectory(graphics)
+add_subdirectory(engine)
 
 # Crear una librería de interfaz que agrupa todas las dependencias
 add_library(phobos INTERFACE)

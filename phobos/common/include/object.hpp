@@ -1,7 +1,7 @@
 #pragma once
 
-#include "phobos/common/definitions.hpp"
-#include "phobos/common/phobos_class.hpp"
+#include "definitions.hpp"
+#include "phobos_class.hpp"
 
 #include <shared_mutex>
 #include <memory>

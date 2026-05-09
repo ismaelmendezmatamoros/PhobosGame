@@ -12,8 +12,8 @@ set(COMMON_SOURCES
     src/utils.cpp
 )
 
-set(COMMON_HEADERS
-    include/phobos/common/common.hpp
+file(GLOB COMMON_HEADERS
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp
 )
 
 # Crear librería compartida
@@ -41,7 +41,7 @@ install(TARGETS phobos_common
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib
     RUNTIME DESTINATION bin
-    PUBLIC_HEADER DESTINATION include/phobos/common
+    PUBLIC_HEADER DESTINATION include
 )
 
 install(DIRECTORY include/ DESTINATION include)

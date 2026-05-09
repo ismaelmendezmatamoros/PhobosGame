@@ -114,5 +114,5 @@ install(TARGETS phobos_window_opengl
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib
     RUNTIME DESTINATION bin
-    PUBLIC_HEADER DESTINATION include/phobos/window/window_opengl
+    PUBLIC_HEADER DESTINATION include
 )

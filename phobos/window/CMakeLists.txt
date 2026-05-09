@@ -25,9 +25,9 @@ set(WINDOW_SOURCES
 )
 
 set(WINDOW_HEADERS
-    include/phobos/window/window.hpp
-    include/phobos/window/window_base_interface.hpp
-    include/phobos/window/windows_definitions.hpp
+    include/window.hpp
+    include/window_base_interface.hpp
+    include/windows_definitions.hpp
 )
 
 add_library(phobos_window SHARED
@@ -77,7 +77,7 @@ install(TARGETS phobos_window
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib
     RUNTIME DESTINATION bin
-    PUBLIC_HEADER DESTINATION include/phobos/window
+    PUBLIC_HEADER DESTINATION include
 )
 
 install(DIRECTORY include/ DESTINATION include)

@@ -5,7 +5,7 @@
 #include <format>
 #include <iostream>
 
-#include "phobos/common/definitions.hpp"
+#include "definitions.hpp"
 
 namespace Phobos {
 

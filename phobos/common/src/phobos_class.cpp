@@ -1,4 +1,4 @@
-#include "phobos/common/phobos_class.hpp"
+#include "phobos_class.hpp"
 
 using namespace Phobos;
 

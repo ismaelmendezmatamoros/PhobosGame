@@ -1,7 +1,7 @@
 #pragma once
 
-#include "phobos/window/window_base_interface.hpp"
-#include "phobos/common/common.hpp"
+#include "window_base_interface.hpp"
+#include "common.hpp"
 
 #include <GL/gl.h>
 

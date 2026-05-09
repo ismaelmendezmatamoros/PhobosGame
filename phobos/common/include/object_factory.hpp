@@ -2,8 +2,8 @@
 
 #include <memory>
 
-#include "phobos/common/definitions.hpp"
-#include "phobos/common/object.hpp"
+#include "definitions.hpp"
+#include "object.hpp"
 
 #include <concepts>
 

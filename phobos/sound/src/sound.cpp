@@ -1,4 +1,4 @@
-#include "phobos/sound/sound.hpp"
+#include "sound.hpp"
 
 namespace phobos::sound {
 

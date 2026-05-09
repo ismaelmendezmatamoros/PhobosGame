@@ -7,7 +7,7 @@
 #include <mutex>
 #include <queue>
 
-#include "phobos/common/log_message.hpp"
+#include "log_message.hpp"
 
 
 namespace Phobos {

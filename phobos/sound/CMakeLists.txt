@@ -15,8 +15,8 @@ set(SOUND_SOURCES
     src/sound.cpp
 )
 
-set(SOUND_HEADERS
-    include/phobos/sound/sound.hpp
+file(GLOB SOUND_HEADERS
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp
 )
 
 # Crear librería compartida
@@ -49,7 +49,7 @@ install(TARGETS phobos_sound
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib
     RUNTIME DESTINATION bin
-    PUBLIC_HEADER DESTINATION include/phobos/sound
+    PUBLIC_HEADER DESTINATION include
 )
 
 install(DIRECTORY include/ DESTINATION include)

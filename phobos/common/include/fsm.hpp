@@ -5,8 +5,8 @@
 #include <map>
 #include <functional>
 
-#include "phobos/common/definitions.hpp"
-//#include "phobos/common/fsm_state.hpp"
+#include "definitions.hpp"
+//#include "fsm_state.hpp"
 
 namespace Phobos {
     

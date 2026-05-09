@@ -2,8 +2,8 @@
 
 #include <atomic>
 #include <string_view>
-#include "phobos/common/definitions.hpp"
-#include "phobos/common/logger.hpp"
+#include "definitions.hpp"
+#include "logger.hpp"
 
 
 

@@ -22,8 +22,8 @@ set(GRAPHICS_SOURCES
     src/graphics.cpp
 )
 
-set(GRAPHICS_HEADERS
-    include/phobos/graphics/graphics.hpp
+file(GLOB GRAPHICS_HEADERS
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp
 )
 
 # Crear librería compartida
@@ -59,7 +59,7 @@ install(TARGETS phobos_graphics
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib
     RUNTIME DESTINATION bin
-    PUBLIC_HEADER DESTINATION include/phobos/graphics
+    PUBLIC_HEADER DESTINATION include
 )
 
 install(DIRECTORY include/ DESTINATION include)

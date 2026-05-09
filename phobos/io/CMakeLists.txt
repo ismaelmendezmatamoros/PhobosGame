@@ -13,8 +13,8 @@ set(IO_SOURCES
     src/io.cpp
 )
 
-set(IO_HEADERS
-    include/phobos/io/io.hpp
+file(GLOB IO_HEADERS
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp
 )
 
 # Crear librería compartida
@@ -47,7 +47,7 @@ install(TARGETS phobos_io
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib
     RUNTIME DESTINATION bin
-    PUBLIC_HEADER DESTINATION include/phobos/io
+    PUBLIC_HEADER DESTINATION include
 )
 
 install(DIRECTORY include/ DESTINATION include)

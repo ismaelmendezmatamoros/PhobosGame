@@ -1,7 +1,7 @@
 #pragma once
 
-#include "phobos/common/common.hpp"
-#include "phobos/window/windows_definitions.hpp"
+#include "common.hpp"
+#include "windows_definitions.hpp"
 
 #include <string>
 #include <string_view>

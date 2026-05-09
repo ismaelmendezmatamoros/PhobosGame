@@ -14,12 +14,7 @@ add_executable(game ${GAME_SOURCES})
 # Dependencias
 target_link_libraries(game
     PRIVATE 
-        phobos
-        phobos_common
-        phobos_window
-        phobos_sound
-        phobos_io
-        phobos_graphics
+        engine
 )
 
 # Configurar includes

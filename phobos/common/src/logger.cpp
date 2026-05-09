@@ -1,7 +1,7 @@
 
 
-#include "phobos/common/logger.hpp"
-#include "phobos/common/definitions.hpp"
+#include "logger.hpp"
+#include "definitions.hpp"
 #include <iostream>
 #include <format>
 #include <chrono>

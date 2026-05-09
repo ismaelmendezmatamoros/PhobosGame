@@ -87,7 +87,7 @@ set(VULKAN_SOURCES
 )
 
 set(VULKAN_HEADERS
-    include/phobos/window/vulkan/vulkan.hpp
+    include/vulkan.hpp
 )
 
 add_library(phobos_window_vulkan SHARED
@@ -124,7 +124,7 @@ install(TARGETS phobos_window_vulkan
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib
     RUNTIME DESTINATION bin
-    PUBLIC_HEADER DESTINATION include/phobos/window/vulkan
+    PUBLIC_HEADER DESTINATION include
 )
 
 message(STATUS "    window_vulkan configurado")

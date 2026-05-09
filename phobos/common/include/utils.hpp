@@ -1,6 +1,6 @@
 #pragma once
 
-#include "phobos/common/definitions.hpp"
+#include "definitions.hpp"
 
 namespace Phobos::Utils {
 

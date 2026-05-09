@@ -1,5 +1,5 @@
 
-#include "phobos/common/object.hpp"
+#include "object.hpp"
 
 using namespace Phobos;
 

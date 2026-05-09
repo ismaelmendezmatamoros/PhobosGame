@@ -1,4 +1,4 @@
-#include "phobos/window/vulkan/vulkan.hpp"
+#include "vulkan.hpp"
 
 namespace Phobos {
 namespace Window {
