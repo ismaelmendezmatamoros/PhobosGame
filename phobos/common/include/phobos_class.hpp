@@ -24,8 +24,6 @@ class PhobosClass {
     virtual std::string formatHeader() const;
     void logMessage(const std::string_view message, const LogMessage::SeverityLevel severity = LogMessage::SeverityLevel::INFO) const;
     
-
-
     IdType getId() const;
 
     virtual ~PhobosClass() = default;

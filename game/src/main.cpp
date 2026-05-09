@@ -74,7 +74,11 @@ int main() {
         fsm();
         fsm();
 
-        Phobos::Window::Window win;
+        Engine::Configuration conf{};
+        conf.windowConfiguration.title = "GAME";
+        auto engine = Phobos::Engine::Engine(conf);
+        
+        engine.initialize();
 
     }
     

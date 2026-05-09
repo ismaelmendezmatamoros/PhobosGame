@@ -11,7 +11,7 @@ namespace OpenGL {
 
     class WindowOpenGL : public WindowBaseInterface {
     public:
-        WindowOpenGL();
+        WindowOpenGL(Window::WindowConfiguration config = Window::WindowConfiguration{});
         ~WindowOpenGL() override = default;
 
         void show() override;
@@ -25,6 +25,11 @@ namespace OpenGL {
         void setResolution(const Resolution &newResolution) override;
 
         void refresh() override;
+
+        std::string formatHeader() const override;
+
+        private:
+         static constexpr std::string logHeader{"Window"};
     };
 
 } // namespace Opengl

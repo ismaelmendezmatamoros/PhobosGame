@@ -1,10 +1,11 @@
 #include "window_opengl.hpp"
+#include <format>
 
 using namespace Phobos::Window::OpenGL;
 
-WindowOpenGL::WindowOpenGL()
+WindowOpenGL::WindowOpenGL(Window::WindowConfiguration config) : WindowBaseInterface{config}
 {
-
+    logMessage(std::format("Window \"{}\" created", title), LogMessage::SeverityLevel::INFO);
 }
 
 void WindowOpenGL::show()
@@ -32,6 +33,10 @@ bool WindowOpenGL::setFullScreen()
 Phobos::Window::Resolution WindowOpenGL::getResolution() const
 {
     return Phobos::Window::Resolution{};
+}
+
+std::string WindowOpenGL::formatHeader() const {
+    return logHeader;
 }
 
 void WindowOpenGL::setResolution(const Resolution &newResolution)

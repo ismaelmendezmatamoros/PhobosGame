@@ -10,8 +10,10 @@ namespace Phobos::Window {
 
     class WindowBaseInterface : public PhobosClass {
         public:
-        WindowBaseInterface(const std::string& title = "Phobos Window", const Resolution &resolution = {800, 600})
-            : title(title), opened(true) {}
+        WindowBaseInterface(Window::WindowConfiguration config)
+            : title{config.title}, opened{true} {
+                std::cout << "ttyyy " << title << std::endl;
+            }
         virtual ~WindowBaseInterface() = default;
         
         virtual void show() = 0;
@@ -26,12 +28,15 @@ namespace Phobos::Window {
 
         virtual void refresh() = 0;
 
+        std::string formatHeader() const override= 0;
+
         std::string getTitle() const { return title; }
         void setTitle(std::string_view newTitle) { title = std::string(newTitle); }
             
-        private:
+        protected:
             std::string title;
             bool opened;
+            WindowConfiguration configuration;
     };
 }
 
