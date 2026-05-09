@@ -44,15 +44,16 @@ namespace Phobos {
             }
 
             virtual void afterStateChanged(SignalType signal, KeyType previousState) {
-                std::cout<< " left " << previousState << std::endl;
+                
             }
 
             virtual void beforeStateChanged(SignalType signal, KeyType newState) {
-                std::cout<< " going  " << newState << std::endl;
+
             }
 
-
-            void operator()(Args&& ...args) {currentStateCall(this, std::forward<Args>(args)...);}
+            void operator()(Args&& ...args) { 
+                currentStateCall(this, std::forward<Args>(args)...);
+            }
 
             KeyType signal(const SignalType &&signal) {
                 auto &transition = transitionsMap[currentStateKey];

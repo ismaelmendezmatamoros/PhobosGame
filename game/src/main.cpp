@@ -47,10 +47,6 @@ int main() {
 
         using FSMType = Phobos::FSM<Phobos::IdType, Signals>;
 
-
-        
-        //using FsmType = 
-
         FSMType::ActionType action1 = [](FSMType *fsm)->int {
             std::cout << "action 1 "<< std::endl;
             fsm->signal(Signals::STATE2);
@@ -69,7 +65,6 @@ int main() {
             return 0;
         };
 
-
         std::list<FSMType::FSMStateTuple> states{{1, action1}, {2, action2}, {3, action3}};
         std::list<FSMType::FSMTransition> transitions{{1, Signals::STATE2, 2}, {2, Signals::STATE3, 3} ,{3, Signals::STATE1, 1}};
 
@@ -82,13 +77,6 @@ int main() {
         fsm();
         fsm();
         fsm();
-    
-
-        /*FSMType fsm2{0
-            ,{{1, action1}, {2, action2}, {3, action3}}
-            //,{{3, Signals::STATE1, 1}, {1, Signals::STATE2, 2}, {2, Signals::STATE3, 3}}};
-            ,{}};*/
-        //fsm2(25); 
     }
     
 

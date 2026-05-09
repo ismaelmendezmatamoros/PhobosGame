@@ -3,6 +3,8 @@ project(phobos_window CXX)
 
 message(STATUS "  Configurando window...")
 
+add_subdirectory(opengl)
+
 # Dependencias
 include(FetchContent)
 
