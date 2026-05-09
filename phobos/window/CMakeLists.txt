@@ -39,6 +39,14 @@ target_link_libraries(phobos_window
     PUBLIC phobos_common
 )
 
+if(USE_WINDOW_OPENGL)
+    target_compile_definitions(phobos_window PUBLIC USE_WINDOW_OPENGL)
+endif()
+
+if(USE_WINDOW_VULKAN)
+    target_compile_definitions(phobos_window PUBLIC USE_WINDOW_VULKAN)
+endif()
+
 if(TARGET phobos_window_opengl)
     target_link_libraries(phobos_window PUBLIC phobos_window_opengl)
 endif()
@@ -56,6 +64,7 @@ target_include_directories(phobos_window
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../sound/include>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../io/include>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../graphics/include>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/window_opengl/include>
 )
 
 set_target_properties(phobos_window PROPERTIES

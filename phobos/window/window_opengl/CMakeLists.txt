@@ -69,11 +69,11 @@ endif()
 find_package(OpenGL REQUIRED)
 
 set(OPENGL_SOURCES
-    src/opengl.cpp
+    src/window_opengl.cpp
 )
 
 set(OPENGL_HEADERS
-    include/phobos/window/opengl/opengl.hpp
+    include/window_opengl.hpp
 )
 
 add_library(phobos_window_opengl SHARED
@@ -85,6 +85,7 @@ target_compile_definitions(phobos_window_opengl PUBLIC USE_WINDOW_OPENGL)
 
 target_link_libraries(phobos_window_opengl
     PUBLIC ${GLFW_TARGET}
+    PUBLIC phobos_common
     PUBLIC OpenGL::GL
 )
 
@@ -97,6 +98,7 @@ endif()
 target_include_directories(phobos_window_opengl
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include>
         $<INSTALL_INTERFACE:include>
 )
 
@@ -112,5 +114,5 @@ install(TARGETS phobos_window_opengl
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib
     RUNTIME DESTINATION bin
-    PUBLIC_HEADER DESTINATION include/phobos/window/opengl
+    PUBLIC_HEADER DESTINATION include/phobos/window/window_opengl
 )

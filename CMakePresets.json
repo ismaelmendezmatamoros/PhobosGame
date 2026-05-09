@@ -1,70 +1,87 @@
-[
+{
+  "version": 2,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 22
+  },
+  "configurePresets": [
     {
-        "name": "linux-debug-build",
-        "description": "Linux Debug Build",
-        "displayName": "Linux Debug",
-        "generator": "Unix Makefiles",
-        "cacheVariables": {
-            "CMAKE_BUILD_TYPE": "Debug",
-            "CMAKE_CXX_COMPILER": "g++",
-            "CMAKE_C_COMPILER": "gcc",
-            "BUILD_SHARED_LIBS": "ON"
-        },
-        "binaryDir": "${sourceDir}/build/linux-debug",
-        "toolchainFile": "",
-        "hidden": false
+      "name": "linux-debug-build",
+      "displayName": "Linux Debug",
+      "description": "Linux Debug Build",
+      "generator": "Unix Makefiles",
+      "binaryDir": "${sourceDir}/build/linux-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_COMPILER": "g++",
+        "CMAKE_C_COMPILER": "gcc",
+        "BUILD_SHARED_LIBS": "ON"
+      }
     },
     {
-        "name": "linux-release-build",
-        "description": "Linux Release Build",
-        "displayName": "Linux Release",
-        "generator": "Unix Makefiles",
-        "cacheVariables": {
-            "CMAKE_BUILD_TYPE": "Release",
-            "CMAKE_CXX_COMPILER": "g++",
-            "CMAKE_C_COMPILER": "gcc",
-            "BUILD_SHARED_LIBS": "ON"
-        },
-        "binaryDir": "${sourceDir}/build/linux-release",
-        "toolchainFile": "",
-        "hidden": false
+      "name": "linux-release-build",
+      "displayName": "Linux Release",
+      "description": "Linux Release Build",
+      "generator": "Unix Makefiles",
+      "binaryDir": "${sourceDir}/build/linux-release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_CXX_COMPILER": "g++",
+        "CMAKE_C_COMPILER": "gcc",
+        "BUILD_SHARED_LIBS": "ON"
+      }
     },
     {
-        "name": "windows-msvc-debug",
-        "description": "Windows MSVC Debug Build (Visual Studio 2025)",
-        "displayName": "Windows MSVC Debug",
-        "generator": "Visual Studio 17 2025",
-        "cacheVariables": {
-            "CMAKE_BUILD_TYPE": "Debug",
-            "BUILD_SHARED_LIBS": "ON",
-            "PLATFORM": "x64"
-        },
-        "binaryDir": "${sourceDir}/build/windows-debug",
-        "toolchainFile": "",
-        "hidden": false,
-        "condition": {
-            "type": "equals",
-            "lhs": "${hostSystemName}",
-            "rhs": "Windows"
-        }
+      "name": "windows-msvc-debug",
+      "displayName": "Windows MSVC Debug",
+      "description": "Windows MSVC Debug Build (Visual Studio 2025)",
+      "generator": "Visual Studio 17 2025",
+      "binaryDir": "${sourceDir}/build/windows-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "BUILD_SHARED_LIBS": "ON",
+        "PLATFORM": "x64"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
     },
     {
-        "name": "windows-msvc-release",
-        "description": "Windows MSVC Release Build (Visual Studio 2025)",
-        "displayName": "Windows MSVC Release",
-        "generator": "Visual Studio 17 2025",
-        "cacheVariables": {
-            "CMAKE_BUILD_TYPE": "Release",
-            "BUILD_SHARED_LIBS": "ON",
-            "PLATFORM": "x64"
-        },
-        "binaryDir": "${sourceDir}/build/windows-release",
-        "toolchainFile": "",
-        "hidden": false,
-        "condition": {
-            "type": "equals",
-            "lhs": "${hostSystemName}",
-            "rhs": "Windows"
-        }
+      "name": "windows-msvc-release",
+      "displayName": "Windows MSVC Release",
+      "description": "Windows MSVC Release Build (Visual Studio 2025)",
+      "generator": "Visual Studio 17 2025",
+      "binaryDir": "${sourceDir}/build/windows-release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "BUILD_SHARED_LIBS": "ON",
+        "PLATFORM": "x64"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
     }
-]
+  ],
+  "buildPresets": [
+    {
+      "name": "linux-debug-build",
+      "configurePreset": "linux-debug-build"
+    },
+    {
+      "name": "linux-release-build",
+      "configurePreset": "linux-release-build"
+    },
+    {
+      "name": "windows-msvc-debug",
+      "configurePreset": "windows-msvc-debug"
+    },
+    {
+      "name": "windows-msvc-release",
+      "configurePreset": "windows-msvc-release"
+    }
+  ]
+}

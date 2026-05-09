@@ -77,6 +77,9 @@ int main() {
         fsm();
         fsm();
         fsm();
+
+        Phobos::Window::Window win;
+
     }
     
 
