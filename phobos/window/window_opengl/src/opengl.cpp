@@ -2,9 +2,9 @@
 
 #include <GL/gl.h>
 
-namespace phobos {
-namespace window {
-namespace opengl {
+namespace Phobos {
+namespace Window {
+namespace Opengl {
 
 OpenGLContext::OpenGLContext() {
     // Constructor

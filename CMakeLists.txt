@@ -22,6 +22,8 @@ enable_testing()
 
 # Opciones de compilación
 option(BUILD_SHARED_LIBS "Build shared libraries" ON)
+option(USE_WINDOW_OPENGL "Enable OpenGL support in window module" ON)
+option(USE_WINDOW_VULKAN "Enable Vulkan support in window module" OFF)
 
 # FetchContent para gestionar dependencias externas
 include(FetchContent)

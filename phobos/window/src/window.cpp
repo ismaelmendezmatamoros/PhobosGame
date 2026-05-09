@@ -1,21 +1,10 @@
 #include "phobos/window/window.hpp"
 
-namespace phobos::window {
+namespace Phobos {
+namespace Window {
 
-Window::Window(const std::string& title, int width, int height)
-    : title(title), width(width), height(height), open(false) {
-}
+// La implementación del módulo window actúa como capa de interfaz
+// entre el resto de phobos y el backend seleccionado.
 
-void Window::show() {
-    open = true;
-}
-
-void Window::hide() {
-    open = false;
-}
-
-bool Window::isOpen() const {
-    return open;
-}
-
-} // namespace phobos::window
+} // namespace Window
+} // namespace Phobos
