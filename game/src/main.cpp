@@ -5,6 +5,11 @@
 #include "phobos/graphics/graphics.hpp"
 
 #include <iostream>
+#include <functional>
+
+
+        template <Phobos::ValidKey KeyType, typename SignalType, typename CallType, typename ...Args>
+        class FSM;
 
 int main() {
 
@@ -31,11 +36,61 @@ int main() {
             parent.logMessage(std::format("{}", p->getId()));
         }
 
+        std::function<void(int)> m = [](int l) -> void {std::cout<<"function " << l <<std::endl;};
+        m(45);
         auto p = [](int p){std::cout<<"werwer" << p <<std::endl;};
+
+        enum class Signals {    
+            STATE1, STATE2, STATE3
+        };
+
+
+        using FSMType = Phobos::FSM<Phobos::IdType, Signals>;
+
+
         
-        Phobos::FSMState<Phobos::IdType, decltype(p), int>mm{p};
-        mm(78);
+        //using FsmType = 
+
+        FSMType::ActionType action1 = [](FSMType *fsm)->int {
+            std::cout << "action 1 "<< std::endl;
+            fsm->signal(Signals::STATE2);
+            return 0;
+        };
+
+        FSMType::ActionType action2 = [](FSMType *fsm)->int {
+            std::cout << "action 2 " << std::endl;
+            fsm->signal(Signals::STATE3);
+            return 0;
+        };
+
+        FSMType::ActionType action3 = [](FSMType *fsm)->int {
+            std::cout << "action 3 "<< std::endl;
+            fsm->signal(Signals::STATE1);
+            return 0;
+        };
+
+
+        std::list<FSMType::FSMStateTuple> states{{1, action1}, {2, action2}, {3, action3}};
+        std::list<FSMType::FSMTransition> transitions{{1, Signals::STATE2, 2}, {2, Signals::STATE3, 3} ,{3, Signals::STATE1, 1}};
+
+        FSMType fsm{1, states, transitions};
+        fsm.signal(Signals::STATE1);
+        fsm.signal(Signals::STATE1);
+        fsm();
+        fsm();
+        fsm();
+        fsm();
+        fsm();
+        fsm();
+    
+
+        /*FSMType fsm2{0
+            ,{{1, action1}, {2, action2}, {3, action3}}
+            //,{{3, Signals::STATE1, 1}, {1, Signals::STATE2, 2}, {2, Signals::STATE3, 3}}};
+            ,{}};*/
+        //fsm2(25); 
     }
+    
 
     catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << std::endl;

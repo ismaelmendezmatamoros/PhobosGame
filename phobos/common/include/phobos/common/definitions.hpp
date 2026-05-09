@@ -15,7 +15,7 @@ namespace Phobos {
     concept ValidKey = requires(const 
         T &a, const T &b) {
         {std::less<T>{}(a, b)} -> std::convertible_to<bool>;
-    };
+    } && std::copy_constructible<T>;
 
     struct LogMessage {
 
