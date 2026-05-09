@@ -2,13 +2,24 @@
 
 #include <iostream>
 #include <functional>
+#include <csignal>
 
+Phobos::Engine::Engine *enginePtr;
 
-        template <Phobos::ValidKey KeyType, typename SignalType, typename CallType, typename ...Args>
-        class FSM;
+void signal_handler(int signal)
+{
+    if (signal == SIGINT)
+    {
+        std::cout << "\nCtrl+C capturado. Cerrando...\n";
+        if (enginePtr != nullptr) {
+            enginePtr->stopMainLoop();
+        }
+    }
+}
+
 
 int main() {
-
+/*
     class PP :public Phobos::Object {
         public:
         PP(const int m):Phobos::Object{nullptr}, l{m} {}
@@ -73,16 +84,19 @@ int main() {
         fsm();
         fsm();
         fsm();
-
+*/
+    try {
         Engine::Configuration conf{};
         conf.windowConfiguration.title = "GAME";
+
         auto engine = Phobos::Engine::Engine(conf);
-        
+
+        enginePtr = &engine;
+        std::signal(SIGINT, signal_handler);
+
         engine.initialize();
-
+        engine.mainLoop();
     }
-    
-
     catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << std::endl;
         return 1;

@@ -4,15 +4,20 @@ namespace Phobos {
 namespace Engine {
 
 Engine::Engine(const Configuration config)
-        : configuration{config} {
+        : configuration{config}
+        , stopLoop{false}
+{
     logMessage("Engine created", Phobos::LogMessage::SeverityLevel::INFO);
+}
+
+Engine::~Engine() {
+    stopMainLoop();
+    logMessage("Finalizing", Phobos::LogMessage::SeverityLevel::INFO);
 }
 
 std::string Engine::formatHeader() const {
     return logHeader;
 }
-
-Engine::~Engine() = default;
 
 void Engine::initialize()
 {
@@ -20,8 +25,18 @@ void Engine::initialize()
             (configuration.initializeComponents & static_cast<InitializeComponentEnumType>(InitializeComponentEnum::All)) != 0;
     bool initializeWindow = configuration.initializeComponents & static_cast<InitializeComponentEnumType>(InitializeComponentEnum::Window);
     if (initializeAll || initializeWindow) {
-        std::make_unique<Phobos::Window::Window>(configuration.windowConfiguration);
+        window = std::make_unique<Phobos::Window::Window>(configuration.windowConfiguration);
     }
+}
+
+void Engine::mainLoop() {
+    while(!stopLoop.load()) {
+
+    }
+}
+
+void Engine::stopMainLoop() {
+    stopLoop.store(true);
 }
 
 } // namespace Engine

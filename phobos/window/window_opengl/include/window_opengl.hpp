@@ -12,7 +12,7 @@ namespace OpenGL {
     class WindowOpenGL : public WindowBaseInterface {
     public:
         WindowOpenGL(Window::WindowConfiguration config = Window::WindowConfiguration{});
-        ~WindowOpenGL() override = default;
+        ~WindowOpenGL() override;
 
         void show() override;
         void hide() override;

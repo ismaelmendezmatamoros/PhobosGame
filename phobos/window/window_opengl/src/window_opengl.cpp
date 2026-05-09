@@ -8,6 +8,10 @@ WindowOpenGL::WindowOpenGL(Window::WindowConfiguration config) : WindowBaseInter
     logMessage(std::format("Window \"{}\" created", title), LogMessage::SeverityLevel::INFO);
 }
 
+WindowOpenGL::~WindowOpenGL() {
+    logMessage("Finalizing", Phobos::LogMessage::SeverityLevel::INFO);
+}
+
 void WindowOpenGL::show()
 {
 }

@@ -12,7 +12,6 @@ namespace Phobos::Window {
         public:
         WindowBaseInterface(Window::WindowConfiguration config)
             : title{config.title}, opened{true} {
-                std::cout << "ttyyy " << title << std::endl;
             }
         virtual ~WindowBaseInterface() = default;
         
@@ -32,6 +31,8 @@ namespace Phobos::Window {
 
         std::string getTitle() const { return title; }
         void setTitle(std::string_view newTitle) { title = std::string(newTitle); }
+
+
             
         protected:
             std::string title;

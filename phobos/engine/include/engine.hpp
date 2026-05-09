@@ -9,6 +9,7 @@
 #include "engine_configuration.hpp"
 
 #include <string>
+#include <atomic>
 
 namespace Phobos {
 namespace Engine {
@@ -21,10 +22,15 @@ class Engine : public Phobos::PhobosClass {
     virtual std::string formatHeader() const override;
 
     void initialize();
+    void mainLoop();
+    void stopMainLoop();
+
     private:
+
     static constexpr std::string logHeader{"Engine"};
     Configuration configuration;
     std::unique_ptr<Window::Window>window;
+    std::atomic<bool> stopLoop;
 };
 
 } // namespace Engine
