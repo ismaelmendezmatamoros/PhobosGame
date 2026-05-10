@@ -3,6 +3,16 @@ project(phobos_window CXX)
 
 message(STATUS "  Configurando window...")
 
+# Dependencias externas
+find_package(glm QUIET)
+if(NOT TARGET glm::glm)
+    include(FetchContent)
+    FetchContent_Declare(glm
+        URL https://github.com/g-truc/glm/releases/download/0.9.9.8/glm-0.9.9.8.zip
+    )
+    FetchContent_MakeAvailable(glm)
+endif()
+
 option(USE_WINDOW_OPENGL "Enable OpenGL support in window module" ON)
 option(USE_WINDOW_VULKAN "Enable Vulkan support in window module" OFF)
 

@@ -28,7 +28,7 @@ namespace OpenGL {
         void execute() override;
         void initialize() override;
 
-        
+        void setClearColor(const glm::vec4 &color) override;
 
         void refresh() override;
 

@@ -47,6 +47,11 @@ void WindowOpenGL::execute() {
     refresh();
 }
 
+void WindowOpenGL::setClearColor(const glm::vec4 &color) {
+    Phobos::Window::WindowBaseInterface::setClearColor(color);
+    glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
+}
+
 void WindowOpenGL::initialize() {
     if (!glfwInit())
     {
@@ -60,14 +65,18 @@ void WindowOpenGL::initialize() {
 #ifdef __APPLE__
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
-    GLFWwindow* window =
+    window =
         glfwCreateWindow(
             configuration.resolution.width,
             configuration.resolution.width,
             configuration.title.c_str(),
             nullptr,
             nullptr);
-
+    glfwMakeContextCurrent(window);
+    int w, h;
+    glfwGetFramebufferSize(window, &w, &h);
+    glViewport(0, 0, w, h);
+    glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
 }
 
 void WindowOpenGL::setResolution(const Resolution &newResolution)
@@ -77,7 +86,6 @@ void WindowOpenGL::setResolution(const Resolution &newResolution)
 
 void WindowOpenGL::refresh()
 {
-    glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
     glClear(GL_COLOR_BUFFER_BIT);
     glfwSwapBuffers(window);
     glfwPollEvents();

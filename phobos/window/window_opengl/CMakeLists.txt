@@ -87,6 +87,7 @@ target_link_libraries(phobos_window_opengl
     PUBLIC ${GLFW_TARGET}
     PUBLIC phobos_common
     PUBLIC OpenGL::GL
+    PUBLIC glm::glm
 )
 
 if(X11_FOUND)

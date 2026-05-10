@@ -33,7 +33,7 @@ namespace Phobos::Window {
         void execute() override = 0;
         void initialize() override = 0;
 
-        void setClearColor(const glm::vec4 &color) {clearColor = color;}
+        virtual void setClearColor(const glm::vec4 &color) {clearColor = color;}
         glm::vec4 getClearColor() {return clearColor;}
 
         virtual void refresh() = 0;

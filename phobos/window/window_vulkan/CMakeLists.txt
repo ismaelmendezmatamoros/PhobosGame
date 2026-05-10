@@ -100,6 +100,7 @@ target_compile_definitions(phobos_window_vulkan PUBLIC USE_WINDOW_VULKAN)
 target_link_libraries(phobos_window_vulkan
     PUBLIC ${GLFW_TARGET}
     PUBLIC ${VULKAN_TARGET}
+    PUBLIC glm::glm
 )
 
 if(X11_FOUND)
