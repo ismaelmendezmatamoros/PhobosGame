@@ -37,6 +37,7 @@ add_library(phobos_window SHARED
 
 target_link_libraries(phobos_window
     PUBLIC phobos_common
+    glm::glm
 )
 
 if(USE_WINDOW_OPENGL)

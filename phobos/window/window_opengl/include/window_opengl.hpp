@@ -4,6 +4,7 @@
 #include "common.hpp"
 
 #include <GL/gl.h>
+#include <GLFW/glfw3.h>
 
 namespace Phobos {
 namespace Window {
@@ -25,11 +26,15 @@ namespace OpenGL {
         void setResolution(const Resolution &newResolution) override;
 
         void execute() override;
+        void initialize() override;
+
+        
 
         void refresh() override;
 
         private:
          static constexpr std::string componentNameConst{"Window"};
+         GLFWwindow *window;
     };
 
 } // namespace Opengl

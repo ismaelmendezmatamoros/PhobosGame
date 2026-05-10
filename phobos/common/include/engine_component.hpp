@@ -23,6 +23,7 @@ namespace Phobos::Engine {
         }
 
         std::string formatHeader() const override { return componentName;}
+        virtual void initialize() = 0;
         virtual void execute() = 0;
 
         protected:

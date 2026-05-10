@@ -14,5 +14,4 @@ namespace Phobos::Window {
         bool fullScreen{false};
         std::string title;
     };
-
 }

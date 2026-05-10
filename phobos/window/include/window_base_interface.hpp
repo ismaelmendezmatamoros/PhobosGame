@@ -6,13 +6,17 @@
 
 #include <string>
 #include <string_view>
+#include <glm/vec4.hpp>
 
 namespace Phobos::Window {
 
     class WindowBaseInterface : public Phobos::Engine::EngineComponent {
         public:
         WindowBaseInterface(std::string name,  Window::WindowConfiguration config)
-            : Phobos::Engine::EngineComponent{name}, title{config.title}, opened{true} {
+                : Phobos::Engine::EngineComponent{name}
+                , title{config.title}
+                , opened{true}
+                , clearColor{0.0, 0.0, 0.5, 1.0} {
             }
         virtual ~WindowBaseInterface() = default;
         
@@ -27,17 +31,20 @@ namespace Phobos::Window {
         virtual void setResolution(const Resolution &newResolution) = 0;
 
         void execute() override = 0;
+        void initialize() override = 0;
+
+        void setClearColor(const glm::vec4 &color) {clearColor = color;}
+        glm::vec4 getClearColor() {return clearColor;}
 
         virtual void refresh() = 0;
 
         std::string getTitle() const { return title; }
         void setTitle(std::string_view newTitle) { title = std::string(newTitle); }
-
-
             
         protected:
             std::string title;
             bool opened;
+            glm::vec4 clearColor;
             WindowConfiguration configuration;
     };
 }
