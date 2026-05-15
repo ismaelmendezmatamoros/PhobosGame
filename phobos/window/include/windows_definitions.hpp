@@ -13,5 +13,7 @@ namespace Phobos::Window {
         Resolution resolution{800, 600};
         bool fullScreen{false};
         std::string title;
+        bool resizeable{true};
+        int bpp{32};
     };
 }

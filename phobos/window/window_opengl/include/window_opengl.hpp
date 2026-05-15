@@ -31,7 +31,9 @@ namespace OpenGL {
         void setClearColor(const glm::vec4 &color) override;
 
         void refresh() override;
-
+        
+        void onWindowResizeCallback(GLFWwindow *window, int width, int height); 
+        
         private:
          static constexpr std::string componentNameConst{"Window"};
          GLFWwindow *window;

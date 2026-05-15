@@ -31,6 +31,7 @@ void Engine::initialize()
 }
 
 void Engine::mainLoop() {
+    Phobos::Timming::TimeStampType now = std::chrono::system_clock::now();
     while(!stopLoop.load()) {
         if (window.get() != nullptr) window->execute();
     }
