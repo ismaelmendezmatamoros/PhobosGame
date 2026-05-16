@@ -11,7 +11,6 @@ void IoGLFW::initialize() {
     if (initializeAll || initializeKeyBoard) {
         keyboard = createKeyboardDevice("KeyBoard_0");
     }
-
 }
 
 Device::KeyBoardDeviceGLFW *IoGLFW::createKeyboardDevice(const std::string &deviceName) {

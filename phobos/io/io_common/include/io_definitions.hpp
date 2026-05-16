@@ -35,7 +35,7 @@ namespace Phobos::Io {
         double pressureY{0.0};
     };
 
-    enum class KeyType: int {
+    enum class KeyBoardKeyType: int {
         Key_Q,
         Key_W,
         Key_E,
@@ -54,7 +54,4 @@ namespace Phobos::Io {
         Key_H,
         Count
     };
-
-
-    
 }
