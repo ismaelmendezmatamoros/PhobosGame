@@ -69,6 +69,7 @@ endif()
 # Archivos fuente
 set(IO_GLFW_SOURCES
     src/io_glfw.cpp
+    src/keyboard_device_glfw.cpp
 )
 
 set(IO_GLFW_HEADERS
@@ -88,7 +89,8 @@ target_compile_definitions(phobos_io_glfw PUBLIC USE_IO_GLFW)
 target_link_libraries(phobos_io_glfw
     PUBLIC ${GLFW_TARGET}
     PUBLIC phobos_window
-    PUBLIC phobos_common)
+    PUBLIC phobos_common
+    PUBLIC phobos_io_common)
 
 # Configurar includes
 target_include_directories(phobos_io_glfw
@@ -97,8 +99,8 @@ target_include_directories(phobos_io_glfw
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:include>
     PRIVATE
-        # Headers de io (solo para compilar io_glfw)
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include>
+        # Headers de io_common (nueva ubicación: include/ directamente)
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../io_common/include>
         $<INSTALL_INTERFACE:include>
 )
 

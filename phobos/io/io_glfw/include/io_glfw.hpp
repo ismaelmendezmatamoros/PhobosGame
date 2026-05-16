@@ -1,6 +1,7 @@
 #pragma once
 
 #include "io_base_interface.hpp"
+#include "keyboard_device_glfw.hpp"
 
 namespace Phobos::Io::GLFW {
     // GLFW Input/Output utilities
@@ -13,7 +14,11 @@ namespace Phobos::Io::GLFW {
         void initialize() override;
         void execute() override;
         void readInput() override;
+
+        Device::KeyBoardDeviceGLFW *createKeyboardDevice(const std::string &deviceName);
+
     private:
         static constexpr std::string componentNameConst{"Io"};
+        Device::KeyBoardDeviceGLFW *keyboard;
     };
 }
