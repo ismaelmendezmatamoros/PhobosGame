@@ -17,6 +17,8 @@ file(GLOB IO_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp
 )
 
+add_subdirectory(io_glfw)
+
 # Crear librería compartida
 add_library(phobos_io SHARED
     ${IO_SOURCES}
@@ -26,6 +28,8 @@ add_library(phobos_io SHARED
 # Dependencias
 target_link_libraries(phobos_io
     PUBLIC phobos_common
+    PUBLIC phobos_window
+    PUBLIC phobos_io_glfw
 )
 
 # Configurar includes
@@ -33,6 +37,7 @@ target_include_directories(phobos_io
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:include>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/io_glfw/include>
 )
 
 # Propiedades de la librería

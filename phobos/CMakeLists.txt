@@ -19,8 +19,8 @@ target_link_libraries(phobos INTERFACE
     phobos_common
     phobos_window
     phobos_sound
-    phobos_io
     phobos_graphics
+    phobos_io
 )
 
 # Exportar información para consumidores

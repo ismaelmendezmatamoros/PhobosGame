@@ -28,6 +28,13 @@ void Engine::initialize()
         window = std::make_unique<Phobos::Window::Window>(configuration.windowConfiguration);
         window->initialize();
     }
+
+    bool initializeIo = window.get() != nullptr 
+                            && configuration.initializeComponents & static_cast<InitializeComponentEnumType>(InitializeComponentEnum::Io);
+    if (initializeAll || initializeWindow) {
+        io = std::make_unique<Phobos::Io::Io>(*window, configuration.ioConfiguration);
+        io->initialize();
+    }
 }
 
 void Engine::mainLoop() {

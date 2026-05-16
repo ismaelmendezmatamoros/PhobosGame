@@ -25,6 +25,7 @@ enable_testing()
 option(BUILD_SHARED_LIBS "Build shared libraries" ON)
 option(USE_WINDOW_OPENGL "Enable OpenGL support in window module" ON)
 option(USE_WINDOW_VULKAN "Enable Vulkan support in window module" OFF)
+option(USE_WINDOW_GLFW "Enable GLFW support in io module" ON)
 
 # FetchContent para gestionar dependencias externas
 include(FetchContent)
@@ -35,6 +36,9 @@ message(STATUS "C++ Standard: ${CMAKE_CXX_STANDARD}")
 message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
 message(STATUS "Generator: ${CMAKE_GENERATOR}")
 message(STATUS "Plataforma: ${CMAKE_SYSTEM_NAME} ${CMAKE_SYSTEM_PROCESSOR}")
+message(STATUS "USE_WINDOW_OPENGL: ${USE_WINDOW_OPENGL}")
+message(STATUS "USE_WINDOW_VULKAN: ${USE_WINDOW_VULKAN}")
+message(STATUS "USE_WINDOW_GLFW: ${USE_WINDOW_GLFW}")
 
 # Subproyectos
 add_subdirectory(phobos)

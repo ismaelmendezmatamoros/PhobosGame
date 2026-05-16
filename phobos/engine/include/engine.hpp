@@ -29,7 +29,8 @@ class Engine : public Phobos::PhobosClass {
 
     static constexpr std::string logHeader{"Engine"};
     Configuration configuration;
-    std::unique_ptr<Window::Window>window;
+    std::unique_ptr<Window::Window> window;
+    std::unique_ptr<Io::Io> io;
     std::atomic<bool> stopLoop;
 };
 

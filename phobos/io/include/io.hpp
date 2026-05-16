@@ -1,8 +1,12 @@
 #pragma once
 
-#include "common.hpp"
+#define USE_IO_GLFW
+#ifdef USE_IO_GLFW
 
-namespace Phobos {
+#include "io_glfw.hpp"
 
+namespace Phobos::Io {
+    using Io = Phobos::Io::GLFW::IoGLFW;
 
-};
+}
+#endif

@@ -1,17 +1,28 @@
 #pragma once
 
 #include "window.hpp"
+#include "io_definitions.hpp"
 
 namespace Phobos::Io {
 
-    class IoBaseInterface : Phobos::Engine::EngineComponent {
+    class IoBaseInterface : public Phobos::Engine::EngineComponent {
         public:
 
-        IoBaseInterface(Phobos::Window::Window &window);
+        IoBaseInterface(
+                const std::string &name,
+                const IoConfiguration &config,
+                Phobos::Window::Window &window);
+        
         void initialize() override;
         void execute() override;
-        void readInput();
+        virtual void readInput() = 0;
 
+        virtual ~IoBaseInterface() = default;
+
+        private:
+
+        IoConfiguration configuration;
+        Phobos::Window::Window &windowComponent;
     };
 
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "window.hpp"
+#include "io.hpp"
 
 using namespace Phobos;
 
@@ -19,6 +20,7 @@ namespace Phobos::Engine {
         InitializeComponentEnumType initializeComponents{
                 static_cast<InitializeComponentEnumType>(InitializeComponentEnum::All)};
         Window::WindowConfiguration windowConfiguration;
+        Io::IoConfiguration ioConfiguration;
     };
     
 }
