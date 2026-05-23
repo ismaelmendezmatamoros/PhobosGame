@@ -14,7 +14,7 @@ void IoGLFW::initialize() {
 }
 
 Device::KeyBoardDeviceGLFW *IoGLFW::createKeyboardDevice(const std::string &deviceName) {
-    auto keyBoard = std::make_unique<Device::KeyBoardDeviceGLFW>(deviceName);
+    auto keyBoard = std::make_unique<Device::KeyBoardDeviceGLFW>(deviceName, std::ref(windowComponent));
     auto id = keyBoard->getId();
     auto result = devicesMap.emplace(id, std::move(keyBoard));
     Device::KeyBoardDeviceGLFW *createdKb = nullptr;
@@ -25,16 +25,13 @@ Device::KeyBoardDeviceGLFW *IoGLFW::createKeyboardDevice(const std::string &devi
 
 void IoGLFW::execute() {
     readInput();
-} 
+}
 
 void IoGLFW::readInput() {
-    glfwPollEvents();
-    
-    if (glfwGetKey(static_cast<GLFWwindow*>(windowComponent.getNativeWindow()), GLFW_KEY_A) == GLFW_PRESS)
-    {
-        logMessage("aaaa");
-    }
+    auto kbStatus = keyboard->readStatus();
 }
+
+
 
 
 

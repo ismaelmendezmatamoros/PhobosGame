@@ -5,6 +5,7 @@
 
 #include <string>
 #include <vector>
+#include <map>
 
 namespace Phobos::Io::Device {
     
@@ -27,7 +28,7 @@ namespace Phobos::Io::Device {
         std::string getName() const {return name;}
         void setName(std::string _name) {name = _name;}
 
-        virtual std::vector<int> readStatus(const std::vector<int> &filter = {}) = 0;
+        virtual std::map<KeyBoardKeyType, KeyStatus> readStatus(const std::vector<KeyBoardKeyType> &filter = {}) = 0;
 
         protected:
         std::string name;

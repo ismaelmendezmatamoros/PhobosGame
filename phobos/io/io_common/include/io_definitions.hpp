@@ -20,7 +20,7 @@ namespace Phobos::Io {
         int InitializeDeviceMask{static_cast<int>(InitializeDeviceMaskType::All)};
     };
     
-    enum class KeyStatus {
+    enum class KeyStatus: int {
         NotPressed,
         Pressed,
         StillPressed,
@@ -31,8 +31,6 @@ namespace Phobos::Io {
     struct KeyInfo {
         int keyId;
         KeyStatus status{KeyStatus::NotPressed};
-        double pressureX{0.0};
-        double pressureY{0.0};
     };
 
     enum class KeyBoardKeyType: int {
@@ -52,6 +50,30 @@ namespace Phobos::Io {
         Key_F,
         Key_G,
         Key_H,
+        Key_J,
+        Key_K,
+        Key_L,
+        Key_Ñ,
+        Key_Z,
+        Key_X,
+        Key_C,
+        Key_V,
+        Key_B,
+        Key_N,
+        Key_M,
+        Key_LSHIFT,
+        Key_RSHIFT,
+        Key_LCTRL,
+        Key_ALT,
+        Key_SPACE,
+        Key_ALTGR,
+        Key_RCTRL,
+        Key_APOSTROPHE,
+        Key_COMMA,
+        Key_MINUS,
+        Key_PERIOD,
+        Key_SLASH,
+        Unknown,
         Count
     };
 }

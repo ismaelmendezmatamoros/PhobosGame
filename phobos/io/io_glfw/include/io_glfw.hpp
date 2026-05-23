@@ -19,6 +19,7 @@ namespace Phobos::Io::GLFW {
 
     private:
         static constexpr std::string componentNameConst{"Io"};
+        static KeyBoardKeyType glfwKeyToPhobosKey(int key);
         Device::KeyBoardDeviceGLFW *keyboard;
     };
 }
