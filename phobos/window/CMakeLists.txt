@@ -4,13 +4,35 @@ project(phobos_window CXX)
 message(STATUS "  Configurando window...")
 
 # Dependencias externas
-find_package(glm QUIET)
+option(PREFER_SYSTEM_GLM "Prefer system-installed glm when available" ON)
+
+if(PREFER_SYSTEM_GLM)
+    find_package(glm 0.9.9 QUIET)
+    if(TARGET glm::glm)
+        message(STATUS "  Using system-installed glm")
+    endif()
+else()
+    find_package(glm QUIET)
+endif()
+
 if(NOT TARGET glm::glm)
     include(FetchContent)
     FetchContent_Declare(glm
         URL https://github.com/g-truc/glm/releases/download/0.9.9.8/glm-0.9.9.8.zip
     )
-    FetchContent_MakeAvailable(glm)
+    # Populate so we can patch older glm CMakeLists that require CMake < 3.5
+    FetchContent_Populate(glm)
+    if(EXISTS "${glm_SOURCE_DIR}/CMakeLists.txt")
+        file(READ "${glm_SOURCE_DIR}/CMakeLists.txt" _glm_cmake_contents)
+        string(REPLACE "cmake_minimum_required(VERSION 3.2 FATAL_ERROR)"
+                       "cmake_minimum_required(VERSION 3.5 FATAL_ERROR)"
+                       _glm_cmake_contents "${_glm_cmake_contents}")
+        string(REPLACE "cmake_policy(VERSION 3.2)"
+                       "cmake_policy(VERSION 3.5)"
+                       _glm_cmake_contents "${_glm_cmake_contents}")
+        file(WRITE "${glm_SOURCE_DIR}/CMakeLists.txt" "${_glm_cmake_contents}")
+    endif()
+    add_subdirectory(${glm_SOURCE_DIR} ${glm_BINARY_DIR})
 endif()
 
 option(USE_WINDOW_OPENGL "Enable OpenGL support in window module" ON)

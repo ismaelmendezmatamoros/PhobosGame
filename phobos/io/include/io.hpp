@@ -1,6 +1,6 @@
 #pragma once
 
-#define USE_IO_GLFW
+//#define USE_IO_GLFW
 #ifdef USE_IO_GLFW
 
 #include "io_glfw.hpp"

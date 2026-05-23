@@ -32,6 +32,8 @@ namespace OpenGL {
 
         void refresh() override;
         
+        void* getNativeWindow() const override;
+
         void onWindowResizeCallback(GLFWwindow *window, int width, int height); 
         
         private:

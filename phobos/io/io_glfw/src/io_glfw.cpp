@@ -29,6 +29,11 @@ void IoGLFW::execute() {
 
 void IoGLFW::readInput() {
     glfwPollEvents();
+    
+    if (glfwGetKey(static_cast<GLFWwindow*>(windowComponent.getNativeWindow()), GLFW_KEY_A) == GLFW_PRESS)
+    {
+        logMessage("aaaa");
+    }
 }
 
 

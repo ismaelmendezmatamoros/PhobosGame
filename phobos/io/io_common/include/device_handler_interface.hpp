@@ -5,9 +5,8 @@
 #include "io_definitions.hpp"
 
 namespace Phobos::Io {
-
-    template <typename DeviceType>
     class DeviceHandlerInterface {
-        
+        void initialize() {}
+                
     };
 };

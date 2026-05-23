@@ -105,3 +105,7 @@ void WindowOpenGL::refresh()
     glfwSwapBuffers(window);
     glfwPollEvents();
 }
+
+void* WindowOpenGL::getNativeWindow() const {
+    return window;
+}

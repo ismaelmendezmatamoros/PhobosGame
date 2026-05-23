@@ -40,6 +40,8 @@ namespace Phobos::Window {
 
         std::string getTitle() const { return title; }
         void setTitle(std::string_view newTitle) { title = std::string(newTitle); }
+
+        virtual void* getNativeWindow() const = 0;
             
         protected:
             std::string title;
