@@ -1,6 +1,9 @@
 #pragma once
 
-#define USE_WINDOW_OPENGL
+#ifndef USE_WINDOW_OPENGL///
+#define USE_WINDOW_OPENGL//
+#endif///
+
 #ifdef USE_WINDOW_OPENGL
 
 #include "window_opengl.hpp"

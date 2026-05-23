@@ -3,6 +3,7 @@
 #include "common.hpp"
 #include "window.hpp"
 #include "device_base_interface.hpp"
+#include <queue>
 
 namespace Phobos::Io::GLFW::Device {
 
@@ -10,7 +11,7 @@ namespace Phobos::Io::GLFW::Device {
         public:
             KeyBoardDeviceGLFW(const std::string &deviceName, Phobos::Window::Window &window);
             std::map<KeyBoardKeyType, KeyStatus> readStatus(const std::vector<KeyBoardKeyType> &filter = {}) override;
-            KeyBoardKeyType glfwKeyToPhobosKey(int key);
+            static KeyBoardKeyType glfwKeyToPhobosKey(int key);
 
         protected:
             static void keyCallback(
@@ -19,6 +20,7 @@ namespace Phobos::Io::GLFW::Device {
                 int scancode,
                 int action,
                 int mods);
+            
             Phobos::Window::Window &windowComponent;
     };
 }

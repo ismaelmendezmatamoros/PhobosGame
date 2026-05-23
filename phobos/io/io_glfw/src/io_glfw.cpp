@@ -29,6 +29,7 @@ void IoGLFW::execute() {
 
 void IoGLFW::readInput() {
     auto kbStatus = keyboard->readStatus();
+    if (kbStatus.contains(KeyBoardKeyType::Key_W) && kbStatus[Key_W] == KeyStatus::Pressed) 
 }
 
 
