@@ -22,9 +22,13 @@ namespace Phobos::Io::GLFW::Device {
                 int scancode,
                 int action,
                 int mods);
+            
+            std::map<KeyBoardKeyType, KeyStatus> getCurrentState(
+                    std::queue<std::map<KeyBoardKeyType, KeyStatus>> &events,
+                    const std::map<KeyBoardKeyType, KeyStatus> &previous);
 
-            std::optional<std::map<KeyBoardKeyType, KeyStatus>> previousKbState;
-            //std::map<KeyBoardKeyType, KeyStatus> *previousKbState{nullptr};
+            std::map<KeyBoardKeyType, KeyStatus> currentKbStatus;
+            std::map<KeyBoardKeyType, KeyStatus> previousKbStatus;
             Phobos::Window::Window &windowComponent;
     };
 }

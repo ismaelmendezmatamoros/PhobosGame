@@ -41,24 +41,38 @@ KeyBoardDeviceGLFW::KeyBoardDeviceGLFW(const std::string &deviceName,  Phobos::W
 
 std::map<Phobos::Io::KeyBoardKeyType, Phobos::Io::KeyStatus> KeyBoardDeviceGLFW::readStatus(const std::vector<KeyBoardKeyType> &filter) {
     glfwPollEvents();
-    //previousKbState.reset();
-    if (kbStatusEvents.empty())
-        return {};//kbStatus.push_back({});
-    
-    if (kbStatusEvents.size() > 1) {
-        auto backIt = std::prev(kbStatusEvents.end());
-        auto &current = *backIt;
-        auto &prev = *std::prev(backIt);
-        
-        const auto filter = [&current] (const KeyBoardKeyType &key) { return !current.contains(key);};
-        for (auto prevKey : std::views::keys(prev) | std::views::filter(filter)) {
-            current[prevKey] = KeyStatus::Released;
+    if (!currentKbStatus.empty()) {
+        logMessage("long " + currentKbStatus.size());
+    }
+    previousKbStatus.clear();
+    previousKbStatus.merge(currentKbStatus);
+    currentKbStatus.clear();
+
+    currentKbStatus = getCurrentState(kbStatusEvents, previousKbStatus);
+    return currentKbStatus;
+}
+
+std::map<Phobos::Io::KeyBoardKeyType, Phobos::Io::KeyStatus> KeyBoardDeviceGLFW::getCurrentState(
+        std::queue<std::map<KeyBoardKeyType, KeyStatus>> &events,
+        const std::map<KeyBoardKeyType, KeyStatus> &previous) {
+    std::map<KeyBoardKeyType, KeyStatus> current;
+    while (!events.empty()) {
+        auto event = std::move(events.front());
+        events.pop();
+        for (auto &[key, val]: event) {
+            current.insert_or_assign(key, val);
         }
     }
-    auto status = std::move(kbStatusEvents.front());
 
-    kbStatusEvents.pop_front();
-    return status;
+    for (auto entry : previous ) {
+        if (!current.contains(entry.first)) {
+            if (entry.second == KeyStatus::Pressed) {
+                current[entry.first] = KeyStatus::Released;
+            }
+        }
+    }
+
+    return current;
 }
 
 bool Phobos::Io::GLFW::Device::KeyBoardDeviceGLFW::insertStatus(std::map<KeyBoardKeyType, KeyStatus> &&status)

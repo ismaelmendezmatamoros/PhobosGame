@@ -34,18 +34,15 @@ namespace Phobos::Io::Device {
             static constexpr unsigned int kbStatusMaxCount{10};
             virtual bool insertStatus(std::map<KeyBoardKeyType, KeyStatus> &&status) {
                if (kbStatusEvents.size() >= kbStatusMaxCount) {
-                    kbStatusEvents.pop_front();
+                    kbStatusEvents.pop();
                     return false;
                 }
-                kbStatusEvents.push_back(std::move(status));
+                kbStatusEvents.push(std::move(status));
                 return true;
             }
 
         std::string name;
         DeviceType type;
-        std::list<std::map<KeyBoardKeyType, KeyStatus>> kbStatusEvents;
-        std::map<KeyBoardKeyType, KeyStatus> currentKbStatus;
-        std::optional<std::map<KeyBoardKeyType, KeyStatus>> previousKbStatus;
-
+        std::queue<std::map<KeyBoardKeyType, KeyStatus>> kbStatusEvents;
     };
 };
