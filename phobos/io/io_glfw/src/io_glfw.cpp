@@ -29,7 +29,19 @@ void IoGLFW::execute() {
 
 void IoGLFW::readInput() {
     auto kbStatus = keyboard->readStatus();
-    if (kbStatus.contains(KeyBoardKeyType::Key_W) && kbStatus[Key_W] == KeyStatus::Pressed) 
+    if (kbStatus.contains(KeyBoardKeyType::Key_W) && kbStatus[KeyBoardKeyType::Key_W] == KeyStatus::Pressed) {
+        auto color =  windowComponent.getClearColor();
+        color.x +=0.1;
+        color.y += 0.05; 
+        windowComponent.setClearColor(color);
+    }
+    if (kbStatus.contains(KeyBoardKeyType::Key_S) && kbStatus[KeyBoardKeyType::Key_S] == KeyStatus::Released) {
+        auto color =  windowComponent.getClearColor();
+        color.x -=0.1;
+        color.y -= 0.05; 
+        windowComponent.setClearColor(color);
+    }
+
 }
 
 
