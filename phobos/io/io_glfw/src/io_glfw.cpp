@@ -40,6 +40,7 @@ void IoGLFW::readInput() {
         color.x -=0.1;
         color.y -= 0.05; 
         windowComponent.setClearColor(color);
+        logMessage("SSSSS");
     }
 
 }
