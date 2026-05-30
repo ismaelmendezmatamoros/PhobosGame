@@ -4,6 +4,21 @@
 
 using namespace Phobos::Io::GLFW::Device;
 
+
+Phobos::Io::KeyStatus KeyBoardDeviceGLFW::glfwKeyStatusToPhobos(int glfwKeyStatus) {
+    switch (glfwKeyStatus) {
+  
+        case GLFW_PRESS: return KeyStatus::Pressed;
+        case GLFW_RELEASE: return KeyStatus::Released;
+        case GLFW_REPEAT: return KeyStatus::StillPressed;
+        
+        default:
+            return KeyStatus::Unknown;
+
+    }
+
+}
+
 void KeyBoardDeviceGLFW::keyCallback(
                                     GLFWwindow* window,
                                     int key,
@@ -13,18 +28,20 @@ void KeyBoardDeviceGLFW::keyCallback(
 
     auto self = static_cast<KeyBoardDeviceGLFW*>(glfwGetWindowUserPointer(window));
     auto nativeWindow = static_cast<GLFWwindow*>(self->windowComponent.getNativeWindow());
-    std::map<KeyBoardKeyType, KeyStatus> current;
+    KeyInfo current;
 
-    for (int i = 0; i < GLFW_KEY_LAST; ++i) {
-        auto phobosKey = glfwKeyToPhobosKey(i);
-        if (phobosKey == KeyBoardKeyType::Unknown)
-            continue;
-        
-        auto keyStatus = glfwGetKey(nativeWindow, i);
-        if (keyStatus == GLFW_PRESS)
-            current.emplace(phobosKey, KeyStatus::Pressed);
-    }
-    self->insertStatus(std::move(current));
+    //for (int i = 0; i < GLFW_KEY_LAST; ++i) {
+    auto phobosKey = glfwKeyToPhobosKey(key);
+    if (phobosKey == KeyBoardKeyType::Unknown)
+        return;
+    
+    auto keyStatus = glfwKeyStatusToPhobos(action);
+    if (keyStatus == KeyStatus::Unknown)
+        return;
+    
+    current.keyId = static_cast<KeyBoardKeyType>(phobosKey);
+    current.status = static_cast<KeyStatus>(keyStatus);
+    self->events.push(std::move(current));
 }
 
 KeyBoardDeviceGLFW::KeyBoardDeviceGLFW(const std::string &deviceName,  Phobos::Window::Window &window)
@@ -41,49 +58,23 @@ KeyBoardDeviceGLFW::KeyBoardDeviceGLFW(const std::string &deviceName,  Phobos::W
 
 std::map<Phobos::Io::KeyBoardKeyType, Phobos::Io::KeyStatus> KeyBoardDeviceGLFW::readStatus(const std::vector<KeyBoardKeyType> &filter) {
     glfwPollEvents();
-    if (!currentKbStatus.empty()) {
-        logMessage("long " + currentKbStatus.size());
-    }
-    previousKbStatus.clear();
-    previousKbStatus.merge(currentKbStatus);
-    currentKbStatus.clear();
+    if (events.empty())
+        return {};
 
-    currentKbStatus = getCurrentState(kbStatusEvents, previousKbStatus);
-    return currentKbStatus;
+    return getCurrentState(events);
 }
 
 std::map<Phobos::Io::KeyBoardKeyType, Phobos::Io::KeyStatus> KeyBoardDeviceGLFW::getCurrentState(
-        std::queue<std::map<KeyBoardKeyType, KeyStatus>> &events,
-        const std::map<KeyBoardKeyType, KeyStatus> &previous) {
+        std::queue<KeyInfo> &events) {
     std::map<KeyBoardKeyType, KeyStatus> current;
     while (!events.empty()) {
         auto event = std::move(events.front());
         events.pop();
-        for (auto &[key, val]: event) {
-            current.insert_or_assign(key, val);
-        }
-    }
-
-    for (auto entry : previous ) {
-        if (!current.contains(entry.first)) {
-            if (entry.second == KeyStatus::Pressed) {
-                current[entry.first] = KeyStatus::Released;
-            }
-        }
+        current.insert_or_assign(event.keyId, event.status);
     }
 
     return current;
 }
-
-bool Phobos::Io::GLFW::Device::KeyBoardDeviceGLFW::insertStatus(std::map<KeyBoardKeyType, KeyStatus> &&status)
-{
-    /*if (!kbStatus.empty())
-        previousKbState.value() = kbStatus.back();
-    else
-        previousKbState.reset();*/
-    return Phobos::Io::Device::DeviceBaseInterface::insertStatus(std::move(status));
-}
-
 
 Phobos::Io::KeyBoardKeyType KeyBoardDeviceGLFW::glfwKeyToPhobosKey(int key) {
     using namespace Phobos::Io;

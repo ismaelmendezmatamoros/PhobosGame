@@ -13,8 +13,6 @@ namespace Phobos::Io::GLFW::Device {
             std::map<KeyBoardKeyType, KeyStatus> readStatus(const std::vector<KeyBoardKeyType> &filter = {}) override;
             static KeyBoardKeyType glfwKeyToPhobosKey(int key);
 
-            bool insertStatus(std::map<KeyBoardKeyType, KeyStatus> &&status) override;
-
         protected:
             static void keyCallback(
                 GLFWwindow* window,
@@ -22,13 +20,12 @@ namespace Phobos::Io::GLFW::Device {
                 int scancode,
                 int action,
                 int mods);
-            
-            std::map<KeyBoardKeyType, KeyStatus> getCurrentState(
-                    std::queue<std::map<KeyBoardKeyType, KeyStatus>> &events,
-                    const std::map<KeyBoardKeyType, KeyStatus> &previous);
 
-            std::map<KeyBoardKeyType, KeyStatus> currentKbStatus;
-            std::map<KeyBoardKeyType, KeyStatus> previousKbStatus;
+            static KeyStatus glfwKeyStatusToPhobos(int glfwKeyStatus);
+            
+            std::map<KeyBoardKeyType, KeyStatus> getCurrentState(std::queue<KeyInfo> &events);
+
+            std::queue<KeyInfo> events;
             Phobos::Window::Window &windowComponent;
     };
 }

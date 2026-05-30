@@ -24,15 +24,11 @@ namespace Phobos::Io {
         NotPressed,
         Pressed,
         StillPressed,
-        Released
+        Released,
+        Unknown
     };
 
-    enum class KeyType: int;
-    struct KeyInfo {
-        int keyId;
-        KeyStatus status{KeyStatus::NotPressed};
-    };
-
+    enum class KeyActionInfoType: int;
     enum class KeyBoardKeyType: int {
         Key_Q,
         Key_W,
@@ -75,5 +71,10 @@ namespace Phobos::Io {
         Key_SLASH,
         Unknown,
         Count
+    };
+
+    struct KeyInfo {
+        KeyBoardKeyType keyId;
+        KeyStatus status{KeyStatus::NotPressed};
     };
 }
