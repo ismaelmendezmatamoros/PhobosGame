@@ -23,6 +23,11 @@ Device::KeyBoardDeviceGLFW *IoGLFW::createKeyboardDevice(const std::string &devi
     return dynamic_cast<Device::KeyBoardDeviceGLFW*>( result.first->second.get());
 }
 
+bool Phobos::Io::GLFW::IoGLFW::refreshDevices()
+{
+    return false;
+}
+
 void IoGLFW::execute() {
     readInput();
 }

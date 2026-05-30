@@ -16,6 +16,7 @@ namespace Phobos::Io::GLFW {
         void readInput() override;
 
         Device::KeyBoardDeviceGLFW *createKeyboardDevice(const std::string &deviceName);
+        bool refreshDevices() override;
 
     private:
         static constexpr std::string componentNameConst{"Io"};

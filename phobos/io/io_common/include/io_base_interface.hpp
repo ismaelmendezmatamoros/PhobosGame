@@ -6,6 +6,8 @@
 
 #include <map>
 #include <memory>
+#include <list>
+#include <optional>
 
 namespace Phobos::Io {
 
@@ -16,12 +18,19 @@ namespace Phobos::Io {
                 const std::string &name,
                 const IoConfiguration &config,
                 Phobos::Window::Window &window);
-        
+        virtual ~IoBaseInterface() = default;
+
         void initialize() override;
         void execute() override = 0;
         virtual void readInput() = 0;
 
-        virtual ~IoBaseInterface() = default;
+        virtual bool refreshDevices() = 0;
+        
+
+
+        Phobos::Io::Device::DeviceBaseInterface* getDevice(IdType deviceId);
+        std::list<IdType> getDeviceIds();
+
 
         protected:
         IoConfiguration configuration;
