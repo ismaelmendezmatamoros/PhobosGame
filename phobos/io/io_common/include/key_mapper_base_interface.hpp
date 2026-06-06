@@ -20,7 +20,7 @@ namespace Phobos::Io
         virtual ~KeyMapperBaseInterface() = default;
 
         public:
-            virtual std::any mapKeys(const std::map<int, DeviceElementDescriptor> &nativeKeys) = 0;
+            virtual std::any mapKeys(const DeviceKeysStatus &nativeKeys) = 0;
     };
 
     class KeyMapperBaseInterfaceObserver {

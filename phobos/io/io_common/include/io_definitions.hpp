@@ -1,6 +1,7 @@
 #pragma once
 
 #include <variant>
+#include <map>
 
 namespace Phobos::Io {
 
@@ -100,6 +101,8 @@ namespace Phobos::Io {
     };
 
     //using int = std::variant<KeyBoardKeyType>;
+
+    using DeviceKeysStatus = std::map<int, DeviceElementDescriptor>;
 
     struct KeyInfo {
         KeyBoardKeyType keyId;

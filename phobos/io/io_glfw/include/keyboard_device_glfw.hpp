@@ -10,7 +10,7 @@ namespace Phobos::Io::GLFW::Device {
     class KeyBoardDeviceGLFW : public Phobos::Io::Device::DeviceBaseInterface {
         public:
             KeyBoardDeviceGLFW(const std::string &deviceName, Phobos::Window::Window &window);
-            std::map<int, DeviceElementDescriptor> readStatus(const std::vector<KeyBoardKeyType> &filter = {}) override;
+            DeviceKeysStatus readStatus(const std::vector<KeyBoardKeyType> &filter = {}) override;
             static KeyBoardKeyType glfwKeyToPhobosKey(int key);
 
         protected:
@@ -23,7 +23,7 @@ namespace Phobos::Io::GLFW::Device {
 
             static KeyStatus glfwKeyStatusToPhobos(int glfwKeyStatus);
             
-            std::map<int, DeviceElementDescriptor> getCurrentState(std::queue<KeyInfo> &events);
+            DeviceKeysStatus getCurrentState(std::queue<KeyInfo> &events);
 
             std::queue<KeyInfo> events;
             Phobos::Window::Window &windowComponent;

@@ -36,7 +36,7 @@ namespace Phobos::Io::Device {
             mappers.push_back(std::move(mapper));
         }
 
-        virtual std::map<int, DeviceElementDescriptor> readStatus(const std::vector<KeyBoardKeyType> &filter = {}) = 0;
+        virtual DeviceKeysStatus readStatus(const std::vector<KeyBoardKeyType> &filter = {}) = 0;
 
         void callMappers() {
             auto status = readStatus();

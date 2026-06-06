@@ -20,7 +20,7 @@ void signal_handler(int signal)
 
 class KbObserver: public Phobos::Io::KeyMapperBaseInterface {
     protected:
-        std::any mapKeys(const std::map<int, Phobos::Io::DeviceElementDescriptor> &nativeKeys) override {
+        std::any mapKeys(const Phobos::Io::DeviceKeysStatus &nativeKeys) override {
             if(nativeKeys.contains(static_cast<int>(Phobos::Io::KeyBoardKeyType::Key_Q))
                     && std::get<Phobos::Io::KeyStatus>(nativeKeys.at(static_cast<int>(Phobos::Io::KeyBoardKeyType::Key_Q))) == Phobos::Io::KeyStatus::Released) {
                 std::cout<< "asdafasdf"<<std::endl;
