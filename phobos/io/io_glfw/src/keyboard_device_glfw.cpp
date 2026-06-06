@@ -56,21 +56,21 @@ KeyBoardDeviceGLFW::KeyBoardDeviceGLFW(const std::string &deviceName,  Phobos::W
     glfwSetWindowUserPointer(ptr, this);
 }
 
-std::map<Phobos::Io::KeyBoardKeyType, Phobos::Io::KeyStatus> KeyBoardDeviceGLFW::readStatus(const std::vector<KeyBoardKeyType> &filter) {
+std::map<int, Phobos::Io::DeviceElementDescriptor> KeyBoardDeviceGLFW::readStatus(const std::vector<KeyBoardKeyType> &filter) {
     glfwPollEvents();
     if (events.empty())
         return {};
-
     return getCurrentState(events);
 }
 
-std::map<Phobos::Io::KeyBoardKeyType, Phobos::Io::KeyStatus> KeyBoardDeviceGLFW::getCurrentState(
+
+std::map<int, Phobos::Io::DeviceElementDescriptor> KeyBoardDeviceGLFW::getCurrentState(
         std::queue<KeyInfo> &events) {
-    std::map<KeyBoardKeyType, KeyStatus> current;
+    std::map<int, DeviceElementDescriptor> current;
     while (!events.empty()) {
         auto event = std::move(events.front());
         events.pop();
-        current.insert_or_assign(event.keyId, event.status);
+        current.insert_or_assign(static_cast<int>(event.keyId), DeviceElementDescriptor{event.status});
     }
 
     return current;

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <variant>
+
 namespace Phobos::Io {
 
     enum class DeviceType : int {
@@ -20,6 +22,7 @@ namespace Phobos::Io {
         int InitializeDeviceMask{static_cast<int>(InitializeDeviceMaskType::All)};
     };
     
+
     enum class KeyStatus: int {
         NotPressed,
         Pressed,
@@ -28,7 +31,30 @@ namespace Phobos::Io {
         Unknown
     };
 
-    enum class KeyActionInfoType: int;
+    struct ControlAxisData {
+        KeyStatus status;
+        float x{0};
+        float y{0};
+        float pressure{0};
+    };
+
+    struct ControllerStatus {
+        ControlAxisData leftJoy;
+        ControlAxisData rightJoy;
+        /// TODO
+    };
+
+    struct BasicAction {
+        float up;
+        float down;
+        float left;
+        float right;
+        bool shot;
+        bool jump;
+        bool start;
+    };
+
+    using DeviceElementDescriptor = std::variant<KeyStatus>;
     enum class KeyBoardKeyType: int {
         Key_Q,
         Key_W,
@@ -73,8 +99,12 @@ namespace Phobos::Io {
         Count
     };
 
+    //using int = std::variant<KeyBoardKeyType>;
+
     struct KeyInfo {
         KeyBoardKeyType keyId;
         KeyStatus status{KeyStatus::NotPressed};
     };
+
+
 }

@@ -26,11 +26,8 @@ namespace Phobos::Io {
 
         virtual bool refreshDevices() = 0;
         
-
-
         Phobos::Io::Device::DeviceBaseInterface* getDevice(IdType deviceId);
         std::list<IdType> getDeviceIds();
-
 
         protected:
         IoConfiguration configuration;

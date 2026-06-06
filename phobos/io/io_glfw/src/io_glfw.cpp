@@ -33,7 +33,10 @@ void IoGLFW::execute() {
 }
 
 void IoGLFW::readInput() {
-    auto kbStatus = keyboard->readStatus();
+    //auto kbStatus = keyboard->readStatus();
+    for(auto& [id, device] : devicesMap) {
+        device->callMappers();
+    }
 }
 
 

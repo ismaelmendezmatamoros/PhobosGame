@@ -49,5 +49,10 @@ void Engine::stopMainLoop() {
     stopLoop.store(true);
 }
 
+Io::Io *Engine::getIoComponent()
+{
+    return io.get();
+}
+
 } // namespace Engine
 } // namespace Phobos

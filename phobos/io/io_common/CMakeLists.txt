@@ -7,6 +7,7 @@ message(STATUS "    Configurando io_common...")
 set(IO_COMMON_SOURCES
     src/filesystem.cpp
     src/io_base_interface.cpp
+    src/key_mapper_interface.cpp
 )
 
 file(GLOB IO_COMMON_HEADERS

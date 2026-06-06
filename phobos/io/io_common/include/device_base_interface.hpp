@@ -1,11 +1,13 @@
 #pragma once
 
 #include "io_definitions.hpp"
+#include "key_mapper_base_interface.hpp"
 #include "common.hpp"
 
 #include <string>
 #include <vector>
 #include <map>
+#include <concepts>
 
 namespace Phobos::Io::Device {
     
@@ -28,11 +30,24 @@ namespace Phobos::Io::Device {
         std::string getName() const {return name;}
         void setName(std::string _name) {name = _name;}
 
-        virtual std::map<KeyBoardKeyType, KeyStatus> readStatus(const std::vector<KeyBoardKeyType> &filter = {}) = 0;
+        template<std::derived_from<KeyMapperBaseInterface> T, typename ...Args>
+        void emplaceKeyMapper(Args&& ...args) {
+            auto mapper = std::make_unique<T>(std::forward<Args>(args)...);
+            mappers.push_back(std::move(mapper));
+        }
+
+        virtual std::map<int, DeviceElementDescriptor> readStatus(const std::vector<KeyBoardKeyType> &filter = {}) = 0;
+
+        void callMappers() {
+            auto status = readStatus();
+            for(auto &mapper: mappers) {
+                mapper->mapKeys(status);
+            }
+        }
 
         protected:
-
         std::string name;
         DeviceType type;
+        std::list<std::unique_ptr<KeyMapperBaseInterface>> mappers;
     };
 };

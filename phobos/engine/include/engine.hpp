@@ -24,6 +24,8 @@ class Engine : public Phobos::PhobosClass {
     void initialize();
     void mainLoop();
     void stopMainLoop();
+    
+    Io::Io *getIoComponent();
 
     private:
 

@@ -20,9 +20,6 @@ namespace Phobos {
     std::derived_from<Derived, Object>;
 
     class Object : virtual public PhobosClass {
-
-
-
         public:
 
         static const std::map<IdType, Object*> &getObjectsRegistry();
