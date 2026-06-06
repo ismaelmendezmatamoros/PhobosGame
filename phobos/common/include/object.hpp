@@ -11,7 +11,7 @@
 #include <list>
 
 namespace Phobos {
-    using namespace Phobos;
+
 
     class Object;
 

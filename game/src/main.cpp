@@ -31,6 +31,18 @@ class KbObserver: public Phobos::Io::KeyMapperBaseInterface {
         }
 };
 
+class Pub : public Phobos::PhobosClass, public Phobos::Subscriber<int>
+{
+private:
+    /* data */
+public:
+    Pub() {}
+    ~Pub() {}
+};
+
+
+
+
 int main() {
     try {
         Engine::Configuration conf{};
@@ -42,11 +54,17 @@ int main() {
         std::signal(SIGINT, signal_handler);
 
         engine.initialize();
+        ///////////////////////////////////
+
         Phobos::Io::Io* io = engine.getIoComponent();
         auto kbId = io->getDeviceIds().front();
         auto kbDevice = io->getDevice(kbId);
         kbDevice->emplaceKeyMapper<KbObserver>();
         
+        //////////////////////////////////
+
+        Pub pub;
+        //////////////////////////////////
         engine.mainLoop();
     }
     catch (const std::exception& e) {
