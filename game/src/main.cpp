@@ -31,7 +31,9 @@ class KbObserver: public Phobos::Io::KeyMapperBaseInterface {
         }
 };
 
-class Pub : public Phobos::PhobosClass, public Phobos::Subscriber<int>
+
+
+class Pub : public Phobos::Publisher<int>
 {
 private:
     /* data */
@@ -40,6 +42,21 @@ public:
     ~Pub() {}
 };
 
+class Sub : public Phobos::PhobosClass, public Phobos::Subscriber<int>
+{
+private:
+    /* data */
+public:
+    Sub() {}
+    void onDataReceived(PublisherInterface<int> *publisher, int &data) override {
+        std::stringstream ss; 
+        ss << "Data from " << data;
+        logMessage(ss.str());
+    }
+    Sub(Sub&&) = default;
+    Sub(const Sub&) = default;
+    ~Sub() {}
+};
 
 
 
@@ -64,8 +81,19 @@ int main() {
         //////////////////////////////////
 
         Pub pub;
+
+        Sub sub;
+        sub.subscribe(&pub);
+        Sub sub2{std::move(sub)};
+        Sub sub3{sub2};
+        pub.publishData(8);
+        sub2.processPublications();
+        sub3.processPublications();
+
+        //pub.clearSubscriptors();
+        //sub.unsubscribe(&pub);
         //////////////////////////////////
-        engine.mainLoop();
+        //engine.mainLoop();
     }
     catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << std::endl;

@@ -1,7 +1,8 @@
 #pragma once
 
 #include "definitions.hpp"
-#include "publisher.hpp"
+#include "publisher_interface.hpp"
+#include "subscriber_interface.hpp"
 
 #include <concepts>
 #include <queue>
@@ -9,97 +10,131 @@
 #include <memory>
 #include <list>
 #include <ranges>
+#include <mutex>
+#include <optional>
+#include <set>
 
 namespace Phobos {
 
     template<std::copy_constructible T>
-    class Subscriber;
-
-    template<std::copy_constructible T>
     class Publisher;
 
-    using SubscriptionControlBlockKeyType = std::pair<intptr_t, intptr_t>;
     template<std::copy_constructible T>
-    struct SubscriptionControlBlock {
-        
-        Subscriber<T> *subscriber;
-        Publisher<T> *publisher;
-        std::queue<T> data;
-    };
-
-    template<std::copy_constructible T>
-    class Subscriber {
+    class Subscriber : public SubscriberInterface<T> {
         public:
+            friend class Publisher<T>;
+
             Subscriber() = default;
             ~Subscriber() {
-                for (auto &[id, controlBlock] : controlBlocks) {
-                    controlBlock.get()->reset();
-                }
-            }
-            
+                clearSubscriptions();
+            }            
 
             Subscriber(Subscriber &&other) {
-                move(std::forward(other));
+                move(std::forward<Subscriber&&>(other));
             }
 
             Subscriber &operator=(Subscriber &&other) {
-                move(std::forward(other));
+                move(std::forward<Subscriber&&>(other));
             }
 
             Subscriber(const Subscriber &other) {
-                move(std::forward(other));
+                copy(other);
             }
 
             Subscriber &operator=(const Subscriber &other) {
-                move(std::forward(other));
+                copy(other);
             }
 
-            void subscribe(const Publisher<T> *publisher) {
+            void subscribe(PublisherInterface<T> *publisher) override {
                 if (!publisher)
                     return;
+                rawSubscribe(publisher);
+                this->addSubscriberToPublisher(publisher);
             }
 
-            bool unsubscribe(const Publisher<T> *publisher) {
+            bool unsubscribe(PublisherInterface<T> *publisher) override {
                 if (!publisher)
                     return false;
-
-                SubscriptionControlBlockKeyType key{publisher, this};
-                auto it = controlBlocks.find(key);
-                if (it == controlBlocks.end())
-                    return false;
-                it->second.get()->reset();
-                
-                return controlBlocks.erase(it->first) > 0;
+                rawUnsubscribe(publisher);
+                this->deleteSubscriberInPublisher(publisher);
+                return true;
             }
 
-            int clearDeadPublishers() {
-                auto eraseIfCheck = [](const auto& item) {
-                    return !item || !*item;
-                };
-                return controlBlocks.erase_if(eraseIfCheck);
-                
+            int getNumSubscriptions() const {
+                std::shared_lock<std::shared_mutex>sl{subscriberMutex};
+                return publications.size();
             }
 
-            int numSubscriptions() const {
-                clearDeadPublishers();
-                return controlBlocks.size();
+            std::list<PublisherInterface<T>*> getPublishers() const {
+                std::shared_lock<std::shared_mutex> sl{subscriberMutex};
+                return publications | std::ranges::to<std::list>;
             }
 
-            std::list<Publisher<T>*> getPublishers() const {
-                clearDeadPublishers();
-                auto getPublisherFunc = [](const auto &key) {
-                    return static_cast<Publisher<T>*>(key.publisher);
-                };
-                return controlBlocks | std::views::keys | std::views::transform(getPublisherFunc) | std::ranges::to<std::list>;
+            virtual void onDataReceived(PublisherInterface<T> *publisher, T &data) = 0;
+
+            void processPublications() {
+                std::unique_lock<std::shared_mutex>sl{subscriberMutex};
+                for (auto &[publisher, data] : publications) {
+                    while (!data.empty()) {
+                        onDataReceived(publisher, data.front());
+                        data.pop();
+                    }
+                }
+                publications.clear();
+            }
+
+            void clearSubscriptions() {
+                while (!publishers.empty()) {
+                    unsubscribe(*publishers.begin());
+                }
             }
 
         protected:
             void move(Subscriber &&other) {
-                
+                publishers.clear();
+                publications.clear();
+                while(!other.publishers.empty()) {
+                    auto pub = *other.publishers.begin();
+                    subscribe(pub);
+                    other.unsubscribe(pub);
+                }
+                publications.merge(other.publications);
+                other.publications.clear();
+                other.publishers.clear();
             }
 
-            std::map<SubscriptionControlBlockKeyType, std::shared_ptr<std::unique_ptr<SubscriptionControlBlock<T>>>> controlBlocks;
+            void copy(const Subscriber &other) {
+                publishers.clear();
+                publications.clear();
+                for (auto pub: other.publishers) {
+                    subscribe(pub);
+                }
+            }
 
+            void addData(PublisherInterface<T> *publisher, T data) override {
+                std::unique_lock<std::shared_mutex> sl{subscriberMutex};
+                publications[publisher].emplace(data);
+            }
+
+            void deletePublisher(PublisherInterface<T> *publisher) override {
+                rawUnsubscribe(publisher);
+            }
+
+            void rawSubscribe(PublisherInterface<T> *publisher) {
+                std::unique_lock<std::shared_mutex> sl{subscriberMutex};
+                if (!publisher || publishers.contains(publisher))
+                    return;
+                publishers.insert(publisher);
+            }
+
+            void rawUnsubscribe(PublisherInterface<T> *publisher) {
+                std::unique_lock<std::shared_mutex> sl{subscriberMutex};
+                publishers.erase(publisher);
+            }
+
+            mutable std::shared_mutex subscriberMutex;
+            std::map<PublisherInterface<T>*, std::queue<T>> publications;
+            std::set<PublisherInterface<T>*> publishers;
     };
 }
 
