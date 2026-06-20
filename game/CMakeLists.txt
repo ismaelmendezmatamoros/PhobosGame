@@ -6,6 +6,7 @@ message(STATUS "=== Configurando game ===")
 # Archivos fuente del ejecutable
 set(GAME_SOURCES
     src/main.cpp
+    src/game_fsm.cpp
 )
 
 # Crear ejecutable
@@ -14,13 +15,14 @@ add_executable(game ${GAME_SOURCES})
 # Dependencias
 target_link_libraries(game
     PRIVATE 
-        engine
+    engine
 )
 
 # Configurar includes
 target_include_directories(game
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
 # Propiedades del ejecutable

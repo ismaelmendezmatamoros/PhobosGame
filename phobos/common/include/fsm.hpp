@@ -35,13 +35,15 @@ namespace Phobos {
                         : currentStateKey{initialState}
             {
                 for( const auto &stateTuple: statesList) {
-                    states.insert_or_assign(stateTuple.key, stateTuple.action);
+                    addState(stateTuple); //states.insert_or_assign(stateTuple.key, stateTuple.action);
                 }
                 for(const auto &transition: transitionsList) {
-                    transitionsMap[transition.sourceStateKey][transition.signal] = transition.nextStateKey;
+                    addTransition(transition); //transitionsMap[transition.sourceStateKey][transition.signal] = transition.nextStateKey;
                 }
                 currentStateCall = (states[currentStateKey]);
             }
+
+            FSM() = default;
 
             virtual void afterStateChanged(SignalType signal, KeyType previousState) {
                 
@@ -69,6 +71,20 @@ namespace Phobos {
 
             virtual ~FSM() = default;
 
+        protected:
+            void addState(const FSMStateTuple &stateTuple) {
+                states.insert_or_assign(stateTuple.key, stateTuple.action);
+            }
+
+            void addTransition(const FSMTransition &transition) {
+                transitionsMap[transition.sourceStateKey][transition.signal] = transition.nextStateKey;
+            }
+
+            void setState(const KeyType stateKey) {
+                currentStateKey = stateKey;
+                currentStateCall = states[currentStateKey];
+            }
+            
         private:
             KeyType currentStateKey;
             ActionType currentStateCall;

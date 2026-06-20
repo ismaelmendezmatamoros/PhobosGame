@@ -5,6 +5,8 @@
 #include <csignal>
 #include <any>
 
+#include "game_fsm.hpp"
+
 Phobos::Engine::Engine *enginePtr;
 
 void signal_handler(int signal)
@@ -62,6 +64,9 @@ public:
 
 int main() {
     try {
+
+        Game::GameFSM game;
+
         Engine::Configuration conf{};
         conf.windowConfiguration.title = "GAME";
 
@@ -93,7 +98,7 @@ int main() {
         //pub.clearSubscriptors();
         //sub.unsubscribe(&pub);
         //////////////////////////////////
-        //engine.mainLoop();
+        engine.mainLoop();
     }
     catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << std::endl;
