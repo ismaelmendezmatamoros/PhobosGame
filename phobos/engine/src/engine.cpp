@@ -1,18 +1,31 @@
 #include "engine.hpp"
 
 namespace Phobos {
-namespace Engine {
 
-Engine::Engine(const Configuration config)
+Engine::Engine(const EngineConfiguration config)
         : configuration{config}
         , stopLoop{false}
 {
     logMessage("Created", Phobos::LogMessage::SeverityLevel::INFO);
+    PhobosClass::engineInstance = this;
 }
 
-Engine::~Engine() {
+std::unique_ptr<Engine> Engine::createEngine(const EngineConfiguration config)
+{
+    static std::once_flag onceFlag;
+    std::unique_ptr<Engine> createdInstance;
+    auto createFunc = [&config, &createdInstance]() {
+        createdInstance = std::unique_ptr<Engine>(new Engine{config});
+    };
+    std::call_once(onceFlag, createFunc);
+    return createdInstance;
+}
+
+Engine::~Engine()
+{
     stopMainLoop();
     logMessage("Finalizing", Phobos::LogMessage::SeverityLevel::INFO);
+    PhobosClass::engineInstance = nullptr;
 }
 
 std::string Engine::formatHeader() const {
@@ -54,5 +67,4 @@ Io::Io *Engine::getIoComponent()
     return io.get();
 }
 
-} // namespace Engine
 } // namespace Phobos

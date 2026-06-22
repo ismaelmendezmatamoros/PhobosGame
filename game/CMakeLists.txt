@@ -6,7 +6,6 @@ message(STATUS "=== Configurando game ===")
 # Archivos fuente del ejecutable
 set(GAME_SOURCES
     src/main.cpp
-    src/game_fsm.cpp
 )
 
 # Crear ejecutable

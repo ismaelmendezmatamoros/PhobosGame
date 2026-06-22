@@ -7,7 +7,7 @@
 #include <string_view>
 #include <format>
 
-namespace Phobos::Engine {
+namespace Phobos {
 
     class EngineComponent: public PhobosClass {
         

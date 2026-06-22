@@ -9,6 +9,8 @@
 
 namespace Phobos {
 
+class Engine;
+
 class PhobosClass {
     
     static inline constexpr IdType invalidId{0};
@@ -27,6 +29,11 @@ class PhobosClass {
     IdType getId() const;
 
     virtual ~PhobosClass() = default;
+
+    Engine* getEngineInstance() const;
+
+    protected:
+    static Engine* engineInstance;
 
     private:
     LogMessage generateLogMessage(const std::string_view message, const LogMessage::SeverityLevel severity) const;

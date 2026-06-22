@@ -11,6 +11,7 @@ set(COMMON_SOURCES
     src/object.cpp
     src/utils.cpp
     src/timming.cpp
+    src/game_fsm.cpp
 )
 
 file(GLOB COMMON_HEADERS

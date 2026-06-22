@@ -10,10 +10,10 @@
 
 namespace Phobos::Window {
 
-    class WindowBaseInterface : public Phobos::Engine::EngineComponent {
+    class WindowBaseInterface : public Phobos::EngineComponent {
         public:
         WindowBaseInterface(std::string name,  Window::WindowConfiguration config)
-                : Phobos::Engine::EngineComponent{name}
+                : Phobos::EngineComponent{name}
                 , title{config.title}
                 , opened{true}
                 , clearColor{0.0, 0.0, 0.5, 1.0} {

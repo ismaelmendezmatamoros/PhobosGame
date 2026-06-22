@@ -7,7 +7,7 @@ IoBaseInterface::IoBaseInterface(
         const std::string &name,
         const IoConfiguration &config,
         Phobos::Window::Window &window)
-    : Phobos::Engine::EngineComponent{name}, configuration{config}, windowComponent{window} {
+    : Phobos::EngineComponent{name}, configuration{config}, windowComponent{window} {
 }
 
 void IoBaseInterface::initialize() {

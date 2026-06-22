@@ -5,7 +5,7 @@
 
 using namespace Phobos;
 
-namespace Phobos::Engine {
+namespace Phobos {
 
     enum class InitializeComponentEnum : int {
         Window = 1,
@@ -16,7 +16,7 @@ namespace Phobos::Engine {
     };
     using InitializeComponentEnumType = int;
 
-    struct Configuration {
+    struct EngineConfiguration {
         InitializeComponentEnumType initializeComponents{
                 static_cast<InitializeComponentEnumType>(InitializeComponentEnum::All)};
         Window::WindowConfiguration windowConfiguration;

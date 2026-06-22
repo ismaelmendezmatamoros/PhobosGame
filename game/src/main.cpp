@@ -7,7 +7,7 @@
 
 #include "game_fsm.hpp"
 
-Phobos::Engine::Engine *enginePtr;
+Phobos::Engine *enginePtr;
 
 void signal_handler(int signal)
 {
@@ -65,12 +65,14 @@ public:
 int main() {
     try {
 
-        Game::GameFSM game;
+        Phobos::GameFSM game;
 
-        Engine::Configuration conf{};
+        EngineConfiguration conf{};
         conf.windowConfiguration.title = "GAME";
 
-        auto engine = Phobos::Engine::Engine(conf);
+        //auto engine = Phobos::Engine::Engine(conf);
+        auto engineUnique= Engine::Engine::createEngine(conf);
+        auto &engine = *engineUnique;
 
         enginePtr = &engine;
         std::signal(SIGINT, signal_handler);

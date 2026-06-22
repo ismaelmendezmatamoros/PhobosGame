@@ -11,7 +11,7 @@
 
 namespace Phobos::Io {
 
-    class IoBaseInterface : public Phobos::Engine::EngineComponent {
+    class IoBaseInterface : public Phobos::EngineComponent {
         public:
 
         IoBaseInterface(

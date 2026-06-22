@@ -4,33 +4,32 @@
 #include <initializer_list>
 #include <map>
 #include <functional>
-#include <any>
 
 #include "definitions.hpp"
-
 //#include "fsm_state.hpp"
 
 namespace Phobos {
     
+    template <Phobos::ValidKey KeyType, typename SignalType, typename ...Args>
     class FSM {
         public:
-            using ActionType = std::function<void(FSM*, std::any&)>;
+            using ActionType = std::function<void(FSM<KeyType, SignalType, Args...>*, Args...)>;
 
             struct FSMStateTuple {
-                int key;
+                KeyType key;
                 ActionType action;
             };
 
             struct FSMTransition {
-                int sourceStateKey;
-                int signal;
-                int nextStateKey;                
+                KeyType sourceStateKey;
+                SignalType signal;
+                KeyType nextStateKey;                
             };
 
             template <std::ranges::input_range FSMStateTupleRange, std::ranges::input_range FSMTransitionRange>
                 requires std::convertible_to<std::ranges::range_value_t<FSMStateTupleRange>, FSMStateTuple> 
                             && std::convertible_to<std::ranges::range_value_t<FSMTransitionRange>, FSMTransition>
-            FSM(const int &initialState,
+            FSM(const KeyType &initialState,
                 const FSMStateTupleRange &statesList,
                 const FSMTransitionRange &transitionsList)
                         : currentStateKey{initialState}
@@ -46,21 +45,21 @@ namespace Phobos {
 
             FSM() = default;
 
-            virtual void afterStateChanged(int signal, int previousState) {
+            virtual void afterStateChanged(SignalType signal, KeyType previousState) {
                 
             }
 
-            virtual void beforeStateChanged(int signal, int newState) {
+            virtual void beforeStateChanged(SignalType signal, KeyType newState) {
 
             }
 
-            void operator()(std::any &&input = std::any{}) { 
-                currentStateCall(this, input);
+            void operator()(Args&& ...args) { 
+                currentStateCall(this, std::forward<Args>(args)...);
             }
 
-            int signal(const int signal) {
+            KeyType signal(const SignalType &&signal) {
                 auto &transition = transitionsMap[currentStateKey];
-                if (const auto stateIt = transition.find(signal); stateIt != transition.end()) {
+                if (const auto stateIt =transition.find(signal); stateIt != transition.end()) {
                     auto prevKey = currentStateKey;
                     beforeStateChanged(signal, stateIt->second);
                     currentStateKey = stateIt->second;
@@ -81,15 +80,15 @@ namespace Phobos {
                 transitionsMap[transition.sourceStateKey][transition.signal] = transition.nextStateKey;
             }
 
-            void setState(const int stateKey) {
+            void setState(const KeyType stateKey) {
                 currentStateKey = stateKey;
                 currentStateCall = states[currentStateKey];
             }
             
         private:
-            int currentStateKey;
+            KeyType currentStateKey;
             ActionType currentStateCall;
-            std::map<int, std::map<int,int>> transitionsMap;
-            std::map<int, ActionType> states;
+            std::map<KeyType, std::map<SignalType,KeyType>> transitionsMap;
+            std::map<KeyType, ActionType> states;
     }; 
 };

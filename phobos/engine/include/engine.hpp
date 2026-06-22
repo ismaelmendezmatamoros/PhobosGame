@@ -12,11 +12,12 @@
 #include <atomic>
 
 namespace Phobos {
-namespace Engine {
+
 
 class Engine : public Phobos::PhobosClass {
     public:
-    Engine(const Configuration config = Configuration{});
+    
+    static std::unique_ptr<Engine> createEngine(const EngineConfiguration config = EngineConfiguration{}); 
     ~Engine();
 
     virtual std::string formatHeader() const override;
@@ -28,13 +29,13 @@ class Engine : public Phobos::PhobosClass {
     Io::Io *getIoComponent();
 
     private:
+    Engine(const EngineConfiguration config = EngineConfiguration{});
 
     static constexpr std::string logHeader{"Engine"};
-    Configuration configuration;
+    EngineConfiguration configuration;
     std::unique_ptr<Window::Window> window;
     std::unique_ptr<Io::Io> io;
     std::atomic<bool> stopLoop;
 };
 
-} // namespace Engine
 } // namespace Phobos
