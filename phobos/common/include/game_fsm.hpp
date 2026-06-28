@@ -26,7 +26,7 @@ namespace Phobos {
         public:
 
         GameFSM();
-        ~GameFSM() = default;
+        virtual ~GameFSM() = default;
 
         std::string formatHeader() const override;
         

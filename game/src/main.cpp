@@ -7,18 +7,7 @@
 
 #include "game_fsm.hpp"
 
-Phobos::Engine *enginePtr;
 
-void signal_handler(int signal)
-{
-    if (signal == SIGINT)
-    {
-        std::cout << "\nCtrl+C capturado. Cerrando...\n";
-        if (enginePtr != nullptr) {
-            enginePtr->stopMainLoop();
-        }
-    }
-}
 
 class KbObserver: public Phobos::Io::KeyMapperBaseInterface {
     protected:
@@ -60,6 +49,29 @@ public:
     ~Sub() {}
 };
 
+class GFSM : public Phobos::GameFSM {
+    public:
+    GFSM() = default;
+    //~GSFM() = default;
+};
+
+
+Phobos::Engine *enginePtr;
+GFSM *gg;
+
+void signal_handler(int signal)
+{
+    if (signal == SIGINT)
+    {
+        std::cout << "\nCtrl+C capturado. Cerrando...\n";
+        /*if (enginePtr != nullptr) {
+            enginePtr->stopMainLoop();
+        }*/
+        if (gg != nullptr) {
+            gg->signal(static_cast<int>(GameSignal::Finalize));
+        }
+    }
+}
 
 
 int main() {
@@ -71,7 +83,9 @@ int main() {
         conf.windowConfiguration.title = "GAME";
 
         //auto engine = Phobos::Engine::Engine(conf);
-        auto engineUnique= Engine::Engine::createEngine(conf);
+        auto gsfm = std::make_unique<GFSM>();
+        gg = gsfm.get();
+        auto engineUnique= Engine::Engine::createEngine(std::move(gsfm), conf);
         auto &engine = *engineUnique;
 
         enginePtr = &engine;
@@ -96,8 +110,7 @@ int main() {
         pub.publishData(8);
         sub2.processPublications();
         sub3.processPublications();
-        //pub.clearSubscriptors();
-        //sub.unsubscribe(&pub);
+
         //////////////////////////////////
         engine.mainLoop();
     }

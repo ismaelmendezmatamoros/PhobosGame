@@ -14,7 +14,7 @@ Phobos::GameFSM::GameFSM() : Phobos::FSM{}
 
     addTransition({static_cast<int>(GameStatesKey::Init), static_cast<int>(GameSignal::InitFinished), static_cast<int>(GameStatesKey::Run)});
     addTransition({static_cast<int>(GameStatesKey::Run), static_cast<int>(GameSignal::Finalize), static_cast<int>(GameStatesKey::Finalize)});
-    
+    setState(static_cast<int>(GameStatesKey::Init));    
 }
 
 std::string Phobos::GameFSM::formatHeader() const
@@ -25,16 +25,18 @@ std::string Phobos::GameFSM::formatHeader() const
 void Phobos::GameFSM::init(Phobos::FSM *fsm)
 {
     logMessage("Init Game");
+    signal(static_cast<int>(GameSignal::InitFinished));
 }
 
 void Phobos::GameFSM::run(Phobos::FSM *fsm)
 {
-    logMessage("splashScreen Game");
+    logMessage("splashScreen Game - Run your game FSM here");
 }
 
 void Phobos::GameFSM::finalize(Phobos::FSM *fsm)
 {
-    logMessage("Finalize Game");
+    logMessage("Finalize Game Signal received");
+    Phobos::EngineBaseInterface::getInstance()->stopMainLoop();    
 }
 
 void Phobos::GameFSM::error(Phobos::FSM *fsm)

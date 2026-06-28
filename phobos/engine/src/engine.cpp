@@ -2,20 +2,21 @@
 
 namespace Phobos {
 
-Engine::Engine(const EngineConfiguration config)
+Engine::Engine(std::unique_ptr<GameFSM> &&gameFSM, const EngineConfiguration config)
         : configuration{config}
         , stopLoop{false}
+        , game{std::move(gameFSM)}
 {
     logMessage("Created", Phobos::LogMessage::SeverityLevel::INFO);
     Phobos::EngineBaseInterface::engineInstance = this;
 }
 
-std::unique_ptr<Engine> Engine::createEngine(const EngineConfiguration config)
+std::unique_ptr<Engine> Engine::createEngine(std::unique_ptr<GameFSM> &&gameFSM, const EngineConfiguration config)
 {
     static std::once_flag onceFlag;
     std::unique_ptr<Engine> createdInstance;
-    auto createFunc = [&config, &createdInstance]() {
-        createdInstance = std::unique_ptr<Engine>(new Engine{config});
+    auto createFunc = [&config, &createdInstance, &gameFSM]() {
+        createdInstance = std::unique_ptr<Engine>(new Engine{std::move(gameFSM), config});
     };
     std::call_once(onceFlag, createFunc);
     return createdInstance;
@@ -55,6 +56,7 @@ void Engine::mainLoop() {
     while(!stopLoop.load()) {
         if (window.get() != nullptr) window->execute();
         if (io.get() != nullptr) io->execute();
+        if (game.get() != nullptr) (*game)();
     }
 }
 

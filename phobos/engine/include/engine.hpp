@@ -20,14 +20,14 @@ class Engine : public Phobos::PhobosClass , public EngineBaseInterface {
     public:
     
     
-    static std::unique_ptr<Engine> createEngine(const EngineConfiguration config = EngineConfiguration{});
+    static std::unique_ptr<Engine> createEngine(std::unique_ptr<GameFSM> &&gameFSM, const EngineConfiguration config = EngineConfiguration{});
     ~Engine();
 
     virtual std::string formatHeader() const override;
 
     void initialize();
     void mainLoop();
-    void stopMainLoop();
+    void stopMainLoop() override;
 
 
     
@@ -35,7 +35,7 @@ class Engine : public Phobos::PhobosClass , public EngineBaseInterface {
     Window::WindowBaseInterface *getWindowComponent() override;
 
     private:
-    Engine(const EngineConfiguration config = EngineConfiguration{});
+    Engine(std::unique_ptr<GameFSM> &&gameFSM, const EngineConfiguration config = EngineConfiguration{});
 
     static constexpr std::string logHeader{"Engine"};
     EngineConfiguration configuration;
