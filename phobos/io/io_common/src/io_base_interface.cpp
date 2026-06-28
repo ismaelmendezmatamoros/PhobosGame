@@ -6,7 +6,7 @@ namespace Phobos::Io {
 IoBaseInterface::IoBaseInterface(
         const std::string &name,
         const IoConfiguration &config,
-        Phobos::Window::Window &window)
+        Phobos::Window::WindowBaseInterface &window)
     : Phobos::EngineComponent{name}, configuration{config}, windowComponent{window} {
 }
 

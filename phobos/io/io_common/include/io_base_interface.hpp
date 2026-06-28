@@ -1,13 +1,17 @@
 #pragma once
 
-#include "window.hpp"
 #include "io_definitions.hpp"
 #include "device_base_interface.hpp"
+#include "engine_component.hpp"
 
 #include <map>
 #include <memory>
 #include <list>
 #include <optional>
+
+namespace Phobos {
+    namespace Window { class WindowBaseInterface; }
+}
 
 namespace Phobos::Io {
 
@@ -15,9 +19,9 @@ namespace Phobos::Io {
         public:
 
         IoBaseInterface(
-                const std::string &name,
-                const IoConfiguration &config,
-                Phobos::Window::Window &window);
+            const std::string &name,
+            const IoConfiguration &config,
+            Phobos::Window::WindowBaseInterface &window);
         virtual ~IoBaseInterface() = default;
 
         void initialize() override;
@@ -31,7 +35,7 @@ namespace Phobos::Io {
 
         protected:
         IoConfiguration configuration;
-        Phobos::Window::Window &windowComponent;
+        Phobos::Window::WindowBaseInterface &windowComponent;
         std::map<IdType, std::unique_ptr<Phobos::Io::Device::DeviceBaseInterface>> devicesMap;
     };
 

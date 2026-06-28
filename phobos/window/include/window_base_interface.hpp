@@ -8,11 +8,12 @@
 #include <string_view>
 #include <glm/vec4.hpp>
 
-namespace Phobos::Window {
+namespace Phobos {
+namespace Window {
 
     class WindowBaseInterface : public Phobos::EngineComponent {
         public:
-        WindowBaseInterface(std::string name,  Window::WindowConfiguration config)
+        WindowBaseInterface(std::string name,  WindowConfiguration config)
                 : Phobos::EngineComponent{name}
                 , title{config.title}
                 , opened{true}
@@ -49,6 +50,7 @@ namespace Phobos::Window {
             glm::vec4 clearColor;
             WindowConfiguration configuration;
     };
+}
 }
 
 

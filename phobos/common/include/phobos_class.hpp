@@ -4,12 +4,9 @@
 #include <string_view>
 #include "definitions.hpp"
 #include "logger.hpp"
-
-
+//#include "engine_base_interface.hpp"
 
 namespace Phobos {
-
-class Engine;
 
 class PhobosClass {
     
@@ -30,10 +27,10 @@ class PhobosClass {
 
     virtual ~PhobosClass() = default;
 
-    Engine* getEngineInstance() const;
+    //EngineBaseInterface* getEngineInstance() const;
 
     protected:
-    static Engine* engineInstance;
+    //static EngineBaseInterface* engineInstance;
 
     private:
     LogMessage generateLogMessage(const std::string_view message, const LogMessage::SeverityLevel severity) const;

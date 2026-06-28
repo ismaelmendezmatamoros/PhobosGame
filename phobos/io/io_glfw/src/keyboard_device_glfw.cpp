@@ -44,7 +44,7 @@ void KeyBoardDeviceGLFW::keyCallback(
     self->events.push(std::move(current));
 }
 
-KeyBoardDeviceGLFW::KeyBoardDeviceGLFW(const std::string &deviceName,  Phobos::Window::Window &window)
+KeyBoardDeviceGLFW::KeyBoardDeviceGLFW(const std::string &deviceName,  Phobos::Window::WindowBaseInterface &window)
         : Phobos::Io::Device::DeviceBaseInterface{DeviceType::keyboard, deviceName}
         , windowComponent{window} {
 

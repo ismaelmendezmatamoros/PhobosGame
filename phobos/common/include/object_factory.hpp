@@ -1,6 +1,7 @@
-#pragma once
+/*#pragma once
 
 #include <memory>
+#include <utility>
 
 #include "definitions.hpp"
 #include "object.hpp"
@@ -15,8 +16,8 @@ namespace Phobos {
         
         public:
         template <typename ...Args>
-        static inline std::shared_ptr<T> createObject(Args ...args) {
-            return std::make_shared<T>(std::forward(args)...);
+        static inline std::shared_ptr<T> createObject(Args&&... args) {
+            return std::make_shared<T>(std::forward<Args>(args)...);
         }
     };
-};
+};*/

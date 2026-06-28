@@ -9,7 +9,7 @@ namespace Phobos::Io::GLFW {
     public:
 
         IoGLFW(
-                Phobos::Window::Window &window,
+                Phobos::Window::WindowBaseInterface &window,
                 const IoConfiguration &config);
         void initialize() override;
         void execute() override;

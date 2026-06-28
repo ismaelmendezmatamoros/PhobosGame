@@ -18,6 +18,16 @@ file(GLOB COMMON_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp
 )
 
+# GLM es requerido porque window_base_interface.hpp incluye cabeceras de glm
+find_package(glm 0.9.9 QUIET)
+if(NOT TARGET glm::glm)
+    include(FetchContent)
+    FetchContent_Declare(glm
+        URL https://github.com/g-truc/glm/releases/download/0.9.9.8/glm-0.9.9.8.zip
+    )
+    FetchContent_MakeAvailable(glm)
+endif()
+
 # Crear librería compartida
 add_library(phobos_common SHARED
     ${COMMON_SOURCES}
@@ -28,7 +38,15 @@ add_library(phobos_common SHARED
 target_include_directories(phobos_common
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../io/io_common/include>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../window/include>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../engine/include>
         $<INSTALL_INTERFACE:include>
+)
+
+target_link_libraries(phobos_common
+    PUBLIC
+        glm::glm
 )
 
 # Propiedades de la librería

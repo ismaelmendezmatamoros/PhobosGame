@@ -1,8 +1,8 @@
 #pragma once
 
-#ifndef USE_WINDOW_OPENGL///
-#define USE_WINDOW_OPENGL//
-#endif///
+#ifndef USE_WINDOW_OPENGL
+#define USE_WINDOW_OPENGL
+#endif
 
 #ifdef USE_WINDOW_OPENGL
 

@@ -1,0 +1,15 @@
+#pragma once
+
+namespace Phobos {
+    namespace Io { class IoBaseInterface; }
+    namespace Window { class WindowBaseInterface; }
+
+    class EngineBaseInterface {
+        public:
+        virtual Io::IoBaseInterface *getIoComponent() = 0;
+        virtual Window::WindowBaseInterface *getWindowComponent() = 0;
+        static EngineBaseInterface* getInstance() { return engineInstance; }
+        protected:
+        static inline EngineBaseInterface *engineInstance;
+    };
+}

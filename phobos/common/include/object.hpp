@@ -2,6 +2,7 @@
 
 #include "definitions.hpp"
 #include "phobos_class.hpp"
+#include "engine_base_interface.hpp"
 
 #include <shared_mutex>
 #include <memory>

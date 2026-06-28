@@ -10,7 +10,7 @@ namespace Phobos {
 
     enum class GameStatesKey : int {
         Init = 0,
-        SplashScreen,
+        Run,
         Finalize,
         Error
     };
@@ -28,11 +28,12 @@ namespace Phobos {
         GameFSM();
         ~GameFSM() = default;
 
+        std::string formatHeader() const override;
+        
         protected:
         virtual void init(Phobos::FSM *fsm);
         virtual void run(Phobos::FSM *fsm);
         virtual void finalize(Phobos::FSM *fsm);
         virtual void error(Phobos::FSM *fsm);
-
     };
 }

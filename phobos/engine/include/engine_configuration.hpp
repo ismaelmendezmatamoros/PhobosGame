@@ -1,6 +1,6 @@
 #pragma once
 
-#include "window.hpp"
+#include "windows_definitions.hpp"
 #include "io.hpp"
 
 using namespace Phobos;

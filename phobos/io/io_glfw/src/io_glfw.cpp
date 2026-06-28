@@ -2,7 +2,7 @@
 
 using namespace Phobos::Io::GLFW;
 
-IoGLFW::IoGLFW(Phobos::Window::Window &window, const IoConfiguration &config)
+IoGLFW::IoGLFW(Phobos::Window::WindowBaseInterface &window, const IoConfiguration &config)
     : IoBaseInterface{componentNameConst, config, window} {}
 
 void IoGLFW::initialize() {

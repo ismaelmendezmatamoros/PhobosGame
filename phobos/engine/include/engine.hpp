@@ -5,8 +5,10 @@
 #include "sound.hpp"
 #include "io.hpp"
 #include "graphics.hpp"
+#include "game_fsm.hpp"
 
 #include "engine_configuration.hpp"
+#include "engine_base_interface.hpp"
 
 #include <string>
 #include <atomic>
@@ -14,10 +16,11 @@
 namespace Phobos {
 
 
-class Engine : public Phobos::PhobosClass {
+class Engine : public Phobos::PhobosClass , public EngineBaseInterface {
     public:
     
-    static std::unique_ptr<Engine> createEngine(const EngineConfiguration config = EngineConfiguration{}); 
+    
+    static std::unique_ptr<Engine> createEngine(const EngineConfiguration config = EngineConfiguration{});
     ~Engine();
 
     virtual std::string formatHeader() const override;
@@ -25,8 +28,11 @@ class Engine : public Phobos::PhobosClass {
     void initialize();
     void mainLoop();
     void stopMainLoop();
+
+
     
-    Io::Io *getIoComponent();
+    Io::IoBaseInterface *getIoComponent() override; 
+    Window::WindowBaseInterface *getWindowComponent() override;
 
     private:
     Engine(const EngineConfiguration config = EngineConfiguration{});
@@ -36,6 +42,7 @@ class Engine : public Phobos::PhobosClass {
     std::unique_ptr<Window::Window> window;
     std::unique_ptr<Io::Io> io;
     std::atomic<bool> stopLoop;
+    std::unique_ptr<GameFSM> game;
 };
 
 } // namespace Phobos

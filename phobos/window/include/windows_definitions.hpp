@@ -2,7 +2,8 @@
 
 #include <string>
 
-namespace Phobos::Window {
+namespace Phobos {
+namespace Window {
 
     struct Resolution {
         int width;
@@ -16,4 +17,6 @@ namespace Phobos::Window {
         bool resizeable{true};
         int bpp{32};
     };
+
+}
 }

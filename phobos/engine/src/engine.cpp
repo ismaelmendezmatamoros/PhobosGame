@@ -7,7 +7,7 @@ Engine::Engine(const EngineConfiguration config)
         , stopLoop{false}
 {
     logMessage("Created", Phobos::LogMessage::SeverityLevel::INFO);
-    PhobosClass::engineInstance = this;
+    Phobos::EngineBaseInterface::engineInstance = this;
 }
 
 std::unique_ptr<Engine> Engine::createEngine(const EngineConfiguration config)
@@ -25,7 +25,7 @@ Engine::~Engine()
 {
     stopMainLoop();
     logMessage("Finalizing", Phobos::LogMessage::SeverityLevel::INFO);
-    PhobosClass::engineInstance = nullptr;
+    Phobos::EngineBaseInterface::engineInstance = nullptr;
 }
 
 std::string Engine::formatHeader() const {
@@ -62,9 +62,14 @@ void Engine::stopMainLoop() {
     stopLoop.store(true);
 }
 
-Io::Io *Engine::getIoComponent()
+Io::IoBaseInterface *Engine::getIoComponent()
 {
     return io.get();
+}
+
+Window::WindowBaseInterface *Engine::getWindowComponent()
+{
+    return window.get();
 }
 
 } // namespace Phobos

@@ -3,15 +3,17 @@
 #include "io_definitions.hpp"
 #include "key_mapper_base_interface.hpp"
 #include "common.hpp"
+#include "phobos_class.hpp"
 
 #include <string>
 #include <vector>
 #include <map>
 #include <concepts>
+#include <memory>
 
 namespace Phobos::Io::Device {
     
-    class DeviceBaseInterface : public PhobosClass {
+    class DeviceBaseInterface : public Phobos::PhobosClass {
         public:
         DeviceBaseInterface(
                 DeviceType _type,

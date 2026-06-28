@@ -4,7 +4,7 @@
 
 using namespace Phobos::Window::OpenGL;
 
-WindowOpenGL::WindowOpenGL(Window::WindowConfiguration config)
+WindowOpenGL::WindowOpenGL(WindowConfiguration config)
         : WindowBaseInterface{componentNameConst, config}
 {
 
@@ -48,7 +48,7 @@ void WindowOpenGL::execute() {
 }
 
 void WindowOpenGL::setClearColor(const glm::vec4 &color) {
-    Phobos::Window::WindowBaseInterface::setClearColor(color);
+    WindowBaseInterface::setClearColor(color);
     glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
 }
 

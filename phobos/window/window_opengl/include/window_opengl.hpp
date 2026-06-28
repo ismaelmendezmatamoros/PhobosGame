@@ -12,7 +12,7 @@ namespace OpenGL {
 
     class WindowOpenGL : public WindowBaseInterface {
     public:
-        WindowOpenGL(Window::WindowConfiguration config = Window::WindowConfiguration{});
+        WindowOpenGL(WindowConfiguration config = WindowConfiguration{});
         ~WindowOpenGL() override;
 
         void show() override;
@@ -41,6 +41,6 @@ namespace OpenGL {
          GLFWwindow *window;
     };
 
-} // namespace Opengl
+} // namespace OpenGL
 } // namespace Window
 } // namespace Phobos

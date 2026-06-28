@@ -2,7 +2,7 @@
 
 using namespace Phobos;
 
-Engine* PhobosClass::engineInstance{};
+//EngineBaseInterface* PhobosClass::engineInstance{};
 
 PhobosClass::PhobosClass() : id{idCounter++} {}
 
@@ -10,11 +10,12 @@ IdType PhobosClass::getId() const {
     return id;
 }
 
-Engine *Phobos::PhobosClass::getEngineInstance() const
+/*
+EngineBaseInterface *Phobos::PhobosClass::getEngineInstance() const
 {
     return PhobosClass::engineInstance;
 }
-
+*/
 PhobosClass::PhobosClass(const PhobosClass &other) : id{idCounter++} {}
 
 PhobosClass::PhobosClass(PhobosClass &&other): id{other.id} {

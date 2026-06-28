@@ -80,7 +80,7 @@ int main() {
         engine.initialize();
         ///////////////////////////////////
 
-        Phobos::Io::Io* io = engine.getIoComponent();
+        Phobos::Io::IoBaseInterface* io = engine.getIoComponent();
         auto kbId = io->getDeviceIds().front();
         auto kbDevice = io->getDevice(kbId);
         kbDevice->emplaceKeyMapper<KbObserver>();
@@ -96,7 +96,6 @@ int main() {
         pub.publishData(8);
         sub2.processPublications();
         sub3.processPublications();
-
         //pub.clearSubscriptors();
         //sub.unsubscribe(&pub);
         //////////////////////////////////

@@ -9,11 +9,11 @@
 
 namespace Phobos {
 
-    class EngineComponent: public PhobosClass {
+    class EngineComponent: public Phobos::PhobosClass {
         
         public:
         EngineComponent(const std::string name)
-                : PhobosClass{}
+                : Phobos::PhobosClass{}
                 , componentName{name} {
             logMessage(std::format("Created"), LogMessage::SeverityLevel::INFO);
         }
