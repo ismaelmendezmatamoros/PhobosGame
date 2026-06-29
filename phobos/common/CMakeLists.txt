@@ -41,6 +41,7 @@ target_include_directories(phobos_common
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../io/io_common/include>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../window/include>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../engine/include>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../graphics/include>
         $<INSTALL_INTERFACE:include>
 )
 
