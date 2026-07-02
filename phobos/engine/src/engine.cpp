@@ -49,6 +49,13 @@ void Engine::initialize()
         io = std::make_unique<Phobos::Io::Io>(*window, configuration.ioConfiguration);
         io->initialize();
     }
+
+    bool initializeGraphics = graphics.get() != nullptr 
+                            && configuration.initializeComponents & static_cast<InitializeComponentEnumType>(InitializeComponentEnum::Graphics);
+    if (initializeAll || initializeGraphics) {
+        graphics = std::make_unique<Phobos::Graphics::Graphics>();
+        graphics->initialize();
+    }
 }
 
 void Engine::mainLoop() {
@@ -57,6 +64,7 @@ void Engine::mainLoop() {
         if (window.get() != nullptr) window->execute();
         if (io.get() != nullptr) io->execute();
         if (game.get() != nullptr) (*game)();
+        if (graphics.get() != nullptr) graphics->execute();
     }
 }
 
@@ -72,6 +80,11 @@ Io::IoBaseInterface *Engine::getIoComponent()
 Window::WindowBaseInterface *Engine::getWindowComponent()
 {
     return window.get();
+}
+
+Graphics::GraphicsBaseInterface *Engine::getGraphicsComponent()
+{
+    return graphics.get();
 }
 
 } // namespace Phobos

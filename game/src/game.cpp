@@ -13,6 +13,8 @@ void Game::run(Phobos::FSM *fsm) {
 
 void Game::init(Phobos::FSM *fsm) {
     Phobos::Io::IoBaseInterface* io = EngineBaseInterface::getInstance()->getIoComponent();
+    auto win = EngineBaseInterface::getInstance()->getWindowComponent();
+    win->setClearColor({1.0, 0,0,0});
     auto kbId = io->getDeviceIds().front();
     auto kbDevice = io->getDevice(kbId);
     kbDevice->emplaceKeyMapper<KbObserver>();

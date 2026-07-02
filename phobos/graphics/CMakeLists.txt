@@ -3,6 +3,8 @@ project(phobos_graphics CXX)
 
 message(STATUS "  Configurando graphics...")
 
+option(USE_GRAPHICS_OPENGL "Enable OpenGL support in graphics module" ON)
+
 # Dependencias
 include(FetchContent)
 
@@ -13,11 +15,14 @@ FetchContent_Declare(glm
 
 FetchContent_MakeAvailable(glm)
 
-# TODO: Configurar aquí otras dependencias externas si se necesitan
-# Ejemplo: FetchContent_Declare(opengl ...)
-# Ejemplo: FetchContent_Declare(glew ...)
+add_subdirectory(graphics_common)
 
-# Archivos fuente
+if(USE_GRAPHICS_OPENGL)
+    add_subdirectory(graphics_opengl)
+else()
+    message(STATUS "  USE_GRAPHICS_OPENGL está deshabilitado; no se compila graphics_opengl.")
+endif()
+
 set(GRAPHICS_SOURCES
     src/graphics.cpp
 )
@@ -26,35 +31,37 @@ file(GLOB GRAPHICS_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp
 )
 
-# Crear librería compartida
 add_library(phobos_graphics SHARED
     ${GRAPHICS_SOURCES}
     ${GRAPHICS_HEADERS}
 )
 
-# Dependencias
 target_link_libraries(phobos_graphics
-    PUBLIC 
+    PUBLIC
         phobos_common
         phobos_window
+        phobos_graphics_common
         glm::glm
 )
 
-# Configurar includes
+if(TARGET phobos_graphics_opengl)
+    target_link_libraries(phobos_graphics PUBLIC phobos_graphics_opengl)
+endif()
+
 target_include_directories(phobos_graphics
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/graphics_common/include>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/graphics_opengl/include>
         $<INSTALL_INTERFACE:include>
 )
 
-# Propiedades de la librería
 set_target_properties(phobos_graphics PROPERTIES
     VERSION 1.0
     SOVERSION 1
     PUBLIC_HEADER "${GRAPHICS_HEADERS}"
 )
 
-# Exportar target
 install(TARGETS phobos_graphics
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib

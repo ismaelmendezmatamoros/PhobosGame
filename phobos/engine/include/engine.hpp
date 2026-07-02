@@ -5,6 +5,7 @@
 #include "sound.hpp"
 #include "io.hpp"
 #include "graphics.hpp"
+#include "graphics_base_interface.hpp"
 #include "game_fsm.hpp"
 
 #include "engine_configuration.hpp"
@@ -31,8 +32,9 @@ class Engine : public Phobos::PhobosClass , public EngineBaseInterface {
 
 
     
-    Io::IoBaseInterface *getIoComponent() override; 
+    Io::IoBaseInterface *getIoComponent() override;
     Window::WindowBaseInterface *getWindowComponent() override;
+    Graphics::GraphicsBaseInterface *getGraphicsComponent() override;
 
     private:
     Engine(std::unique_ptr<GameFSM> &&gameFSM, const EngineConfiguration config = EngineConfiguration{});
@@ -41,6 +43,7 @@ class Engine : public Phobos::PhobosClass , public EngineBaseInterface {
     EngineConfiguration configuration;
     std::unique_ptr<Window::Window> window;
     std::unique_ptr<Io::Io> io;
+    std::unique_ptr<Graphics::Graphics> graphics;
     std::atomic<bool> stopLoop;
     std::unique_ptr<GameFSM> game;
 };

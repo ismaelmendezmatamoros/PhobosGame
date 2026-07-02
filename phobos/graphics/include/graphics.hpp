@@ -1,25 +1,16 @@
 #pragma once
 
 #include <glm/glm.hpp>
-#include <string>
+#include "graphics_common.hpp"
 
-namespace phobos::graphics {
+#ifndef USE_GRAPHICS_OPENGL
+#define USE_GRAPHICS_OPENGL
+#endif
 
-class Renderer {
-public:
-    Renderer();
-    ~Renderer() = default;
-    
-    void initialize();
-    void shutdown();
-    void render();
-    
-    glm::mat4 getProjectionMatrix() const;
-    glm::mat4 getViewMatrix() const;
-    
-private:
-    glm::mat4 projectionMatrix;
-    glm::mat4 viewMatrix;
-};
+#ifdef USE_GRAPHICS_OPENGL
+#include "graphics_opengl.hpp"
 
-} // namespace phobos::graphics
+namespace Phobos::Graphics {
+    using Graphics = OpenGL::GraphicsOpenGL;
+}
+#endif
