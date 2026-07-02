@@ -19,6 +19,7 @@ add_library(phobos_graphics_common SHARED
 target_link_libraries(phobos_graphics_common
     PUBLIC
         phobos_common
+        phobos_window
         glm::glm
 )
 

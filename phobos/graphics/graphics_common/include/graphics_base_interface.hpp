@@ -1,7 +1,8 @@
 #pragma once
 
 #include "common.hpp"
-#include "engine_component.hpp"
+#include "window_base_interface.hpp"
+
 
 namespace Phobos::Graphics {
 class GraphicsBaseInterface :  public EngineComponent {
@@ -13,6 +14,7 @@ class GraphicsBaseInterface :  public EngineComponent {
     //void initialize() override;
     protected:
     static inline constexpr std::string graphicsNameStr{"Graphics"};
+    Window::WindowBaseInterface *window;
     
 };
 

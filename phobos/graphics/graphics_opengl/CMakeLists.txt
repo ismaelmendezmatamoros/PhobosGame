@@ -4,6 +4,8 @@ project(phobos_graphics_opengl CXX)
 message(STATUS "    Configurando graphics_opengl...")
 
 find_package(OpenGL REQUIRED)
+find_package(GLEW REQUIRED)
+
 
 set(GRAPHICS_OPENGL_SOURCES
     src/graphics_opengl.cpp
@@ -23,7 +25,10 @@ target_compile_definitions(phobos_graphics_opengl PUBLIC USE_GRAPHICS_OPENGL)
 target_link_libraries(phobos_graphics_opengl
     PUBLIC
         phobos_graphics_common
+        phobos_window
         OpenGL::GL
+        glfw
+        GLEW::GLEW
         glm::glm
 )
 
@@ -31,6 +36,7 @@ target_include_directories(phobos_graphics_opengl
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../graphics_common/include>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../../window/include>
         $<INSTALL_INTERFACE:include>
 )
 
