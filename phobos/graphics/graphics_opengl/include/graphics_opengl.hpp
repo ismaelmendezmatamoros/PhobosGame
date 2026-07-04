@@ -2,6 +2,7 @@
 
 #include <glm/glm.hpp>
 #include "graphics_base_interface.hpp"
+#include "shader_stage_opengl.hpp"
 
 namespace Phobos::Graphics::OpenGL {
 

@@ -10,7 +10,9 @@
 #ifdef USE_GRAPHICS_OPENGL
 #include "graphics_opengl.hpp"
 
+
 namespace Phobos::Graphics {
     using Graphics = OpenGL::GraphicsOpenGL;
+    using ShaderStage = OpenGL::ShaderStageOpenGl;
 }
 #endif

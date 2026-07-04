@@ -61,10 +61,10 @@ void Engine::initialize()
 void Engine::mainLoop() {
     Phobos::Timming::TimeStampType now = std::chrono::system_clock::now();
     while(!stopLoop.load()) {
-        if (window.get() != nullptr) window->execute();
         if (io.get() != nullptr) io->execute();
         if (game.get() != nullptr) (*game)();
         if (graphics.get() != nullptr) graphics->execute();
+        if (window.get() != nullptr) window->execute();
     }
 }
 

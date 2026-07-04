@@ -34,7 +34,7 @@ public:
     void onDataReceived(PublisherInterface<int> *publisher, int &data) override {
         std::stringstream ss; 
         ss << "Data from " << data;
-        logMessage(ss.str());
+        //logMessage(ss.str());
     }
     Sub(Sub&&) = default;
     Sub(const Sub&) = default;

@@ -1,4 +1,5 @@
 #include "graphics_opengl.hpp"
+
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/ext/matrix_clip_space.hpp>
 #include <GL/glew.h>
@@ -123,12 +124,17 @@ void DrawGreenTriangle(GLFWwindow *win)
         glEnableVertexAttribArray(0);
 
         glBindVertexArray(0);
+
+        Phobos::Graphics::OpenGL::ShaderStageOpenGl stage(Phobos::ShaderStageType::VertexShader, fsSource, "foo");
+        stage.logMessage(stage.getCode());
+
     }
 
     glUseProgram(program);
     glBindVertexArray(vao);
     glDrawArrays(GL_TRIANGLES, 0, 3);
     glBindVertexArray(0);
+    
 
 }
 void GraphicsOpenGL::execute()

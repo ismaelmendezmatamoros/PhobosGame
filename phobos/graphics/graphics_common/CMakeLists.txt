@@ -5,6 +5,8 @@ message(STATUS "    Configurando graphics_common...")
 
 set(GRAPHICS_COMMON_SOURCES
     src/graphics_base_interface.cpp
+    src/shader_base_interface.cpp
+    src/shader_stage_base_interface.cpp
 )
 
 file(GLOB GRAPHICS_COMMON_HEADERS
