@@ -4,3 +4,8 @@ Phobos::Graphics::GraphicsBaseInterface::GraphicsBaseInterface()
     : Phobos::EngineComponent{graphicsNameStr}
 {
 }
+
+GPUMemoryManagerBaseInterface *Phobos::Graphics::GraphicsBaseInterface::getGPUMemoryManager()
+{
+    return gpuMemoryManager.get();
+}

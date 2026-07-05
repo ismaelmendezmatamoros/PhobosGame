@@ -10,6 +10,8 @@ find_package(GLEW REQUIRED)
 set(GRAPHICS_OPENGL_SOURCES
     src/graphics_opengl.cpp
     src/shader_stage_opengl.cpp
+    src/gpu_buffer_opengl.cpp
+    src/gpu_memory_manager_opengl.cpp
 )
 
 file(GLOB GRAPHICS_OPENGL_HEADERS

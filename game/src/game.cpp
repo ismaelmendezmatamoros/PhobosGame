@@ -18,5 +18,10 @@ void Game::init(Phobos::FSM *fsm) {
     auto kbId = io->getDeviceIds().front();
     auto kbDevice = io->getDevice(kbId);
     kbDevice->emplaceKeyMapper<KbObserver>();
+
+//////////
+    auto mm = EngineBaseInterface::getInstance()->getGraphicsComponent()->getGPUMemoryManager();
+////////////////
+
     GameFSM::init(fsm);
 }

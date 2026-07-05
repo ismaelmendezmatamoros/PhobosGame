@@ -5,7 +5,7 @@
 namespace Phobos::Graphics::OpenGL {
     class ShaderStageOpenGl : public ShaderStageBaseInterface {
         public:
-        ShaderStageOpenGl(const ShaderStageType type, const std::string_view code, const std::string shaderName = "");
+        ShaderStageOpenGl(const ShaderStageType type, const std::string_view code);
         ~ShaderStageOpenGl() = default;
 
         protected:

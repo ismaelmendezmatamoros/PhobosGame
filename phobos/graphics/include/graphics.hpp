@@ -14,5 +14,7 @@
 namespace Phobos::Graphics {
     using Graphics = OpenGL::GraphicsOpenGL;
     using ShaderStage = OpenGL::ShaderStageOpenGl;
+    using GPUBuffer = OpenGL::GPUBufferOpenGL;
+    using GPUMemoryManager = OpenGL::GPUMemoryManagerOpenGL;
 }
 #endif

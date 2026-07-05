@@ -10,6 +10,7 @@ namespace Phobos::Graphics::OpenGL {
 GraphicsOpenGL::GraphicsOpenGL()
     //: projectionMatrix(1.0f), viewMatrix(1.0f) {
 {
+    gpuMemoryManager = std::make_unique<GPUMemoryManagerOpenGL>();
 }
 
 void GraphicsOpenGL::initialize()
@@ -125,7 +126,7 @@ void DrawGreenTriangle(GLFWwindow *win)
 
         glBindVertexArray(0);
 
-        Phobos::Graphics::OpenGL::ShaderStageOpenGl stage(Phobos::ShaderStageType::VertexShader, fsSource, "foo");
+        Phobos::Graphics::OpenGL::ShaderStageOpenGl stage(Phobos::ShaderStageType::VertexShader, fsSource);
 
         struct a {int d;} xx;
         xx.d = 4;
@@ -135,9 +136,6 @@ void DrawGreenTriangle(GLFWwindow *win)
 
         stage.addParameter<a>(1, xx);
         stage.addParameter<std::vector<a>>(1, p);
-
-
-        stage.logMessage(stage.getCode());
 
     }
 

@@ -2,12 +2,10 @@
 
 using namespace Phobos;
 
-ShaderStageBaseInterface::ShaderStageBaseInterface(const ShaderStageType type, const std::string_view code, const std::string shaderName)
+ShaderStageBaseInterface::ShaderStageBaseInterface(const ShaderStageType type, const std::string_view code)
     : stageType{type}
     , codeText{code}
     , compiled{false}
-    , name{shaderName.empty() ? "Shader " + ShaderStageNameMap[type] : shaderName }
-
 {
 }
 
@@ -21,12 +19,9 @@ const std::string_view Phobos::ShaderStageBaseInterface::getCode() const
     return codeText;
 }
 
-const std::string_view Phobos::ShaderStageBaseInterface::getname() const
+bool Phobos::ShaderStageBaseInterface::isLoaded() const
 {
-    return name;
+    return loaded;
 }
 
-std::string Phobos::ShaderStageBaseInterface::formatHeader() const
-{
-    return std::format("{} {}", name, ShaderStageNameMap[stageType]);
-}
+

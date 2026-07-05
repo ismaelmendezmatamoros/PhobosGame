@@ -32,23 +32,21 @@ namespace Phobos {
     template<typename T>
     concept ContiguousRange = std::ranges::contiguous_range<T>;
 
-    class ShaderStageBaseInterface : public PhobosClass {
+    class ShaderStageBaseInterface {
         public:
-        ShaderStageBaseInterface(const ShaderStageType type, const std::string_view code, const std::string shaderName = "");
+        ShaderStageBaseInterface(const ShaderStageType type, const std::string_view code);
         virtual ~ShaderStageBaseInterface() = default;
 
         ShaderStageType getType() const;
         const std::string_view getCode() const;
-        const std::string_view getname() const;
         
         virtual void addParameterImp(int layout, std::span<const std::byte> data) = 0;
-        std::string formatHeader() const override;
+        //std::string formatHeader() const override;
 
         template <typename T>
             requires (!ContiguousRange<T>)
         void addParameter(int layout, const T &data) { 
             std::span<const T> dataSpan{&data, 1};
-            logMessage("singleee");
             addParameterImp(layout, std::as_bytes(dataSpan));
         }
 
@@ -58,12 +56,13 @@ namespace Phobos {
             addParameterImp(layout, std::as_bytes(dataSpan));
         }
 
-        virtual std::optional<std::string> compile() = 0;        
+        virtual std::optional<std::string> compile() = 0;
+        bool isLoaded() const;
 
         protected:
         ShaderStageType stageType;
         std::string codeText;
         bool compiled;
-        std::string name;
+        bool loaded;
     };
 }
