@@ -6,12 +6,16 @@
 #include <string_view>
 #include <optional>
 #include <span>
+#include <concepts>
 
 namespace Phobos {
     enum class ShaderStageType {
         VertexShader = 0,
         Geometric,
         Fragment,
+        Compute,
+        TessControl,
+        TessEvaluation,
         Count
     };
 
@@ -19,8 +23,14 @@ namespace Phobos {
         {ShaderStageType::VertexShader, "VertexShader"}, 
         {ShaderStageType::Geometric, "Geometric"}, 
         {ShaderStageType::Fragment, "Fragment"}, 
+        {ShaderStageType::Compute, "Compute"}, 
+        {ShaderStageType::TessControl, "TessControl"}, 
+        {ShaderStageType::TessEvaluation, "TessEvaluation"}, 
         {ShaderStageType::Count, "Count"}
     };
+
+    template<typename T>
+    concept ContiguousRange = std::ranges::contiguous_range<T>;
 
     class ShaderStageBaseInterface : public PhobosClass {
         public:
@@ -31,16 +41,24 @@ namespace Phobos {
         const std::string_view getCode() const;
         const std::string_view getname() const;
         
-        virtual void addParameterImp(int layout, std::span<const std::byte> data , std::size_t size) = 0;
+        virtual void addParameterImp(int layout, std::span<const std::byte> data) = 0;
         std::string formatHeader() const override;
 
         template <typename T>
-        void addparameter(int layout, auto data) { 
-            std::span<T> dataSpan{data};
-            addParameterImp(layout, dataSpan.as_bytes(), dataSpan.size_bytes());
+            requires (!ContiguousRange<T>)
+        void addParameter(int layout, const T &data) { 
+            std::span<const T> dataSpan{&data, 1};
+            logMessage("singleee");
+            addParameterImp(layout, std::as_bytes(dataSpan));
         }
 
-        //virtual std::optional<std::string> compile() = 0;        
+        template <ContiguousRange T>
+        void addParameter(int layout, const T &data) { 
+            std::span<const std::ranges::range_value_t<T>> dataSpan{data};
+            addParameterImp(layout, std::as_bytes(dataSpan));
+        }
+
+        virtual std::optional<std::string> compile() = 0;        
 
         protected:
         ShaderStageType stageType;

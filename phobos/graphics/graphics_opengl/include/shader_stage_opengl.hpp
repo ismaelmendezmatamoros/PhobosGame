@@ -9,8 +9,8 @@ namespace Phobos::Graphics::OpenGL {
         ~ShaderStageOpenGl() = default;
 
         protected:
-        void addParameterImp(int layout, std::span<const std::byte> data , std::size_t size) override;
+        void addParameterImp(int layout, std::span<const std::byte> data) override;
 
-        //std::optional<std::string> compile() override; 
+        std::optional<std::string> compile() override; 
     };
 }

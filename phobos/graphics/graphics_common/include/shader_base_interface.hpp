@@ -10,7 +10,9 @@ namespace Phobos {
         public:
         //ShaderBaseInterface() = default;
         virtual ~ShaderBaseInterface() = default;
+        //void setStage()
         protected:
         std::map<ShaderStageType, std::unique_ptr<ShaderStageBaseInterface>> stages;
+
     };
 }

@@ -126,6 +126,17 @@ void DrawGreenTriangle(GLFWwindow *win)
         glBindVertexArray(0);
 
         Phobos::Graphics::OpenGL::ShaderStageOpenGl stage(Phobos::ShaderStageType::VertexShader, fsSource, "foo");
+
+        struct a {int d;} xx;
+        xx.d = 4;
+
+        std::vector<a> p{4};
+        p[0].d = 255;
+
+        stage.addParameter<a>(1, xx);
+        stage.addParameter<std::vector<a>>(1, p);
+
+
         stage.logMessage(stage.getCode());
 
     }
