@@ -16,6 +16,8 @@ public:
     void initialize() override;
     void execute() override;
 
+    GPUMemoryManagerBaseInterface* getGPUMemoryManager() override;
+
     //void initialize();
     //void shutdown();
     //void render();
@@ -24,6 +26,7 @@ public:
     //glm::mat4 getViewMatrix() const;
 
 private:
+    GPUMemoryManagerOpenGL gpuMemoryManager;
     //glm::mat4 projectionMatrix;
     //glm::mat4 viewMatrix;
 };

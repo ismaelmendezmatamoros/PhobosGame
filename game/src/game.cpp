@@ -21,6 +21,8 @@ void Game::init(Phobos::FSM *fsm) {
 
 //////////
     auto mm = EngineBaseInterface::getInstance()->getGraphicsComponent()->getGPUMemoryManager();
+    auto p = mm->createBuffer(1, Phobos::BufferType::ArrayBuffer, 400);
+    mm->deleteBuffer(1);
 ////////////////
 
     GameFSM::init(fsm);

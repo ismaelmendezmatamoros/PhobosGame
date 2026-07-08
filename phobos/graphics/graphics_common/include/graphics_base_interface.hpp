@@ -12,12 +12,13 @@ class GraphicsBaseInterface :  public EngineComponent {
 
     //void execute() override;
     //void initialize() override;
-    GPUMemoryManagerBaseInterface* getGPUMemoryManager();
+    virtual GPUMemoryManagerBaseInterface* getGPUMemoryManager() = 0;
 
     protected:
     static inline constexpr std::string graphicsNameStr{"Graphics"};
     Window::WindowBaseInterface *window;
-    std::unique_ptr<GPUMemoryManagerBaseInterface> gpuMemoryManager;
+    
+
     
 };
 

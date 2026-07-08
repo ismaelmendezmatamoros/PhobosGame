@@ -2,15 +2,16 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/ext/matrix_clip_space.hpp>
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
+//#include <GL/glew.h>
+//#include <GLFW/glfw3.h>
+//#include "include_opengl.hpp"
 
 namespace Phobos::Graphics::OpenGL {
 
 GraphicsOpenGL::GraphicsOpenGL()
     //: projectionMatrix(1.0f), viewMatrix(1.0f) {
 {
-    gpuMemoryManager = std::make_unique<GPUMemoryManagerOpenGL>();
+
 }
 
 void GraphicsOpenGL::initialize()
@@ -151,6 +152,11 @@ void GraphicsOpenGL::execute()
     auto win = static_cast<GLFWwindow*>(window->getNativeWindow());
     DrawGreenTriangle(win);
     glfwSwapBuffers(win);
+}
+
+GPUMemoryManagerBaseInterface *GraphicsOpenGL::getGPUMemoryManager()
+{
+    return &gpuMemoryManager;
 }
 
 /*

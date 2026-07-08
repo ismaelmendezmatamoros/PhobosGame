@@ -5,7 +5,3 @@ Phobos::Graphics::GraphicsBaseInterface::GraphicsBaseInterface()
 {
 }
 
-GPUMemoryManagerBaseInterface *Phobos::Graphics::GraphicsBaseInterface::getGPUMemoryManager()
-{
-    return gpuMemoryManager.get();
-}
