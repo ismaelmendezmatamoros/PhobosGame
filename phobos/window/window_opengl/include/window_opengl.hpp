@@ -3,7 +3,7 @@
 #include "window_base_interface.hpp"
 #include "common.hpp"
 
-#include <GL/gl.h>
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
 namespace Phobos {

@@ -22,7 +22,13 @@ void Game::init(Phobos::FSM *fsm) {
 //////////
     auto mm = EngineBaseInterface::getInstance()->getGraphicsComponent()->getGPUMemoryManager();
     auto p = mm->createBuffer(1, Phobos::BufferType::ArrayBuffer, 400);
+    std::string ff{"124"};
+    //std::span<const std::byte> raw{(std::byte*)ff.data()};
+    p->write(ff, 0);
+    auto b = p->read(0, 4);
+    std::cout << " sdsd " << (char*) b.data() << std::endl;
     mm->deleteBuffer(1);
+    //aqui se testean los buffers
 ////////////////
 
     GameFSM::init(fsm);

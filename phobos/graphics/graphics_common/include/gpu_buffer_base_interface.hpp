@@ -1,21 +1,29 @@
 #pragma once
 
 #include <span>
+#include <concepts>
 #include "common.hpp"
 
 namespace Phobos {
 
+    template<typename T>
+    concept SpanCompatible =
+        requires(T& value)
+        {
+            std::span{value};
+        };
+
     enum class BufferType : int {
         ArrayBuffer,
-        ShaderDataBuffer,
-        ShaderDataBufferReadOnly,
+        CopyReadBuffer,
+        CopyWriteBuffer,
         ElementArrayBuffer,
-        TextureBuffer,
         PixelStorageReadBuffer,
         PixelStorageWriteBuffer,
         QueryBuffer,
-        CopyReadBuffer,
-        CopyWriteBuffer
+        ShaderDataBuffer,
+        ShaderDataBufferReadOnly,
+        TextureBuffer
     };
 
     class GPUBufferBaseInterface {
@@ -25,8 +33,11 @@ namespace Phobos {
 
       bool isReadOnly() const;
       BufferType getType() const;
-      virtual void write(std::span<std::byte> data) = 0;
-      virtual const std::span<std::byte> read(std::size_t pos) const = 0;
+    
+      template<SpanCompatible T>
+      inline void write(const T &data, std::size_t pos);
+      //virtual void writeInternal(const std::span<const std::byte> &data, std::size_t pos) = 0;
+      virtual const std::vector<std::byte> read(std::size_t pos, std::size_t size) const = 0;
       virtual void freeBuffer() = 0;
       virtual void useBuffer(bool use) = 0;
       bool isAllocated() const;
@@ -35,6 +46,7 @@ namespace Phobos {
       bool operator<(const GPUBufferBaseInterface &other) const;
 
       protected:
+      virtual void writeInternal(const std::span<const std::byte> &data, std::size_t pos = 0) = 0;
       bool readOnly;
       bool allocated;
       std::size_t size;
@@ -42,4 +54,12 @@ namespace Phobos {
       IdType id;
       bool inUse;
     };
+
+
+    
+    template<SpanCompatible T>
+    inline void GPUBufferBaseInterface::write(const T &data, std::size_t pos)
+    {
+        writeInternal(std::as_bytes(std::span{data}), pos);
+    }
 }

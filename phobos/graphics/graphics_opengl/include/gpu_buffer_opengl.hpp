@@ -10,13 +10,17 @@ namespace Phobos::Graphics::OpenGL {
     public:
     GPUBufferOpenGL(IdType bufferId, BufferType bufferType, std::size_t bufferSize);
     ~GPUBufferOpenGL();
-    void write(std::span<std::byte> data) override;
-    const std::span<std::byte> read(std::size_t pos) const override;
+    
+    const std::vector<std::byte> read(std::size_t pos, std::size_t size) const override;
     void useBuffer(bool use) override;
     void freeBuffer() override;
 
     protected:
+    void writeInternal(const std::span<const std::byte> &data, std::size_t pos = 0) override;
+    static GLenum bufferTypeToGLenum(BufferType);
+    
     GLuint glBufferHandler;
+    GLenum glTargetBuffer;
 
     };
 
