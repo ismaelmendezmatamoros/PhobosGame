@@ -20,7 +20,7 @@ GL_TEXTURE_BUFFER	Texture data buffer
 GL_TRANSFORM_FEEDBACK_BUFFER	Transform feedback buffer
 GL_UNIFORM_BUFFER	Uniform block storage
         */
-    case BufferType::ArrayBuffer:  !!!!comprobar que todos los tipos tengan sentido. revisar los read only
+    case BufferType::ArrayBuffer:  //!!!!comprobar que todos los tipos tengan sentido. revisar los read only
         return GL_ARRAY_BUFFER;
     case BufferType::CopyReadBuffer:
         return GL_COPY_READ_BUFFER;
@@ -56,10 +56,11 @@ Phobos::Graphics::OpenGL::GPUBufferOpenGL::GPUBufferOpenGL(IdType bufferId, Buff
         bufferSize,
         nullptr,
         GL_DYNAMIC_STORAGE_BIT
-    );!!!!!!!vas por aqqui
-    mira a ver si tiene mas cuenta usar un mapeo de buffer a puntero para ller yh escribir que usar
-    glNamedBufferStorage. de todas formas esto funciona.
-lo siguiente que tienes que implementart son los shaders!!!!
+    );
+    //!!!!!!!vas por aqqui
+    //mira a ver si tiene mas cuenta usar un mapeo de buffer a puntero para ller yh escribir que usar
+    //glNamedBufferStorage. de todas formas esto funciona.
+    //lo siguiente que tienes que implementart son los shaders!!!!
 
 }
 

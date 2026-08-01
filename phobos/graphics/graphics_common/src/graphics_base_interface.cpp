@@ -5,3 +5,6 @@ Phobos::Graphics::GraphicsBaseInterface::GraphicsBaseInterface()
 {
 }
 
+ShaderManager& Phobos::Graphics::GraphicsBaseInterface::getShaderManager() {
+    return shaderManager;
+}

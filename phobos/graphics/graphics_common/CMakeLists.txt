@@ -9,6 +9,7 @@ set(GRAPHICS_COMMON_SOURCES
     src/shader_stage_base_interface.cpp
     src/gpu_memory_manager_base_interface.cpp
     src/gpu_buffer_base_interface.cpp
+    src/shader_manager.cpp
 )
 
 file(GLOB GRAPHICS_COMMON_HEADERS

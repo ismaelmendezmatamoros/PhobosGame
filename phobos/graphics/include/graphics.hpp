@@ -2,6 +2,11 @@
 
 #include <glm/glm.hpp>
 #include "graphics_common.hpp"
+#include <filesystem>
+
+namespace Phobos::Graphics {
+    static inline std::filesystem::path shaderCommonSourceFolders{"shaders"};
+}
 
 #ifndef USE_GRAPHICS_OPENGL
 #define USE_GRAPHICS_OPENGL
@@ -16,5 +21,7 @@ namespace Phobos::Graphics {
     using ShaderStage = OpenGL::ShaderStageOpenGl;
     using GPUBuffer = OpenGL::GPUBufferOpenGL;
     using GPUMemoryManager = OpenGL::GPUMemoryManagerOpenGL;
+
+    static inline std::filesystem::path shaderSourceFolders{shaderCommonSourceFolders.append("opengl")};
 }
 #endif

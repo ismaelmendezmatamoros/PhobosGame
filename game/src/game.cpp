@@ -28,6 +28,9 @@ void Game::init(Phobos::FSM *fsm) {
     auto b = p->read(0, 4);
     std::cout << " sdsd " << (char*) b.data() << std::endl;
     mm->deleteBuffer(1);
+    auto sm = EngineBaseInterface::getInstance()->getGraphicsComponent()->getShaderManager();
+    auto sources = Phobos::ShaderManager::getSourceFromFiles({{Phobos::ShaderStageType::VertexShader, Phobos::Graphics::shaderSourceFolders.append("simpleFragment.txt")}});
+
     //aqui se testean los buffers
 ////////////////
 

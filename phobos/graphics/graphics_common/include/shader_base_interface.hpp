@@ -18,7 +18,6 @@ namespace Phobos {
         std::string getShaderName() const;
 
         protected:
-        std::map<ShaderStageType, std::unique_ptr<ShaderStageBaseInterface>> stages;
         std::string name;
         IdType id;
     };
